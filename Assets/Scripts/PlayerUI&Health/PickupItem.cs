@@ -45,6 +45,7 @@ public class PickupItem : MonoBehaviour
                 {
                     if(missions.Mission1==true && missions.Mission2==true && missions.Mission3==false && missions.Mission4 == false)
                     {
+                        //¹Ì¼Ç3
                         missions.Mission3 = true;
                         playerdata.playerMoney += 800;
                     }

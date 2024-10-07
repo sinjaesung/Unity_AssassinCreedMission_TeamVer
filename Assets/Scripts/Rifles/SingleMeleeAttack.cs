@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class SingleMeleeAttack : MonoBehaviour
@@ -89,6 +90,8 @@ public class SingleMeleeAttack : MonoBehaviour
 
             KnightAI knightAI = knight.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = knight.GetComponent<KnightAI2>();
+            Gangster ganster = knight.GetComponent<Gangster>();
+            PoliceMan policeman = knight.GetComponent<PoliceMan>();
 
             if (knightAI != null)
             {
@@ -97,6 +100,14 @@ public class SingleMeleeAttack : MonoBehaviour
             if (knightAI2 != null)
             {
                 knightAI2.TakeDamage(giveDamage);
+            }
+            if (ganster != null)
+            {
+                ganster.characterHitDamage(giveDamage);
+            }
+            if (policeman != null)
+            {
+                policeman.characterHitDamage(giveDamage);
             }
         }
     }

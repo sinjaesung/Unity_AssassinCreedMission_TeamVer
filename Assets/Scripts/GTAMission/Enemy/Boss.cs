@@ -22,6 +22,7 @@ public class Boss : MonoBehaviour
             //pass mission
             if (missions.Mission1 == true && missions.Mission2 == true && missions.Mission3 == true && missions.Mission4 == false)
             {
+                //¹Ì¼Ç4
                 missions.Mission4 = true;
                 player.playerMoney += 2000;
             }

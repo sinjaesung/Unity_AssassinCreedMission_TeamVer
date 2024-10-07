@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Grenade : MonoBehaviour
@@ -44,6 +45,8 @@ public class Grenade : MonoBehaviour
             Object obj = nearbyObject.GetComponent<Object>();
             KnightAI knightAI = nearbyObject.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = nearbyObject.GetComponent<KnightAI2>();
+            Gangster ganster = nearbyObject.GetComponent<Gangster>();
+            PoliceMan policeman = nearbyObject.GetComponent<PoliceMan>();
 
             if (obj != null)
             {
@@ -56,6 +59,14 @@ public class Grenade : MonoBehaviour
             if (knightAI2 != null)
             {
                 knightAI2.TakeDamage(giveDamage);
+            }
+            if (ganster != null)
+            {
+                ganster.characterHitDamage(giveDamage);
+            }
+            if (policeman != null)
+            {
+                policeman.characterHitDamage(giveDamage);
             }
         }
 

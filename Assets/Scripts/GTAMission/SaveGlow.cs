@@ -11,13 +11,14 @@ public class SaveGlow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+       /* if(other.gameObject.tag == "Player")
         {
             player.SavePlayer();
             //UI
             StartCoroutine(SaveUI());
-        }
+        }*/
 
+        //¹Ì¼Ç1
         if (missions.Mission1 == false && missions.Mission2 == false && missions.Mission3 == false && missions.Mission4 == false)
         {
             missions.Mission1 = true;

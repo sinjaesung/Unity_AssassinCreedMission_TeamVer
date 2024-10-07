@@ -1823,6 +1823,7 @@ GameObject:
   - component: {fileID: 2720676550697414558}
   - component: {fileID: 5285290183728931041}
   - component: {fileID: 5415757230560499045}
+  - component: {fileID: 2592417105441855095}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1884,7 +1885,7 @@ MonoBehaviour:
   fallingSpeed: -0.5
   moveDir: {x: 0, y: 0, z: 0}
   requiredMoveDir: {x: 0, y: 0, z: 0}
-  pickupItem: {fileID: 0}
+  pickupItems: []
   inventory: {fileID: 5415757230560499045}
 --- !u!114 &2152151353452754969
 MonoBehaviour:
@@ -2146,6 +2147,22 @@ MonoBehaviour:
   CurrentWeapon2: {fileID: 0}
   CurrentWeapon3: {fileID: 0}
   CurrentWeapon4: {fileID: 0}
+--- !u!114 &2592417105441855095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300246454333299612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7460edac3691e64f96e4da36c09d30c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMoney: 0
+  currentkills: 0
+  inventory: {fileID: 5415757230560499045}
+  missions: {fileID: 0}
 --- !u!1 &4695852467012557150
 GameObject:
   m_ObjectHideFlags: 0

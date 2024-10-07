@@ -12,6 +12,21 @@ public class Player : MonoBehaviour
     public Inventory inventory;
     public Missions missions;
 
+    public PickupItem[] pickupItems;
+
+    private void Awake()
+    {
+        missions = FindObjectOfType<Missions>();
+        FindObjectOfType<WantedLevel>().SetData(this);
+        FindObjectOfType<MoneyUI>().SetData(this);
+        pickupItems = FindObjectsOfType<PickupItem>();
+
+        for (int e = 0; e < pickupItems.Length; e++)
+        {
+            var item = pickupItems[e];
+            item.SetPlayerData(this);
+        }
+    }
     private void Update()
     {
         if (Input.GetKeyDown("p"))
@@ -21,7 +36,7 @@ public class Player : MonoBehaviour
     }
     public void SavePlayer()
     {
-       // SaveSystem.SavePlayer(this);
+        SaveSystem.SavePlayer(this);
     }
     public void LoadPlayer()
     {
@@ -50,3 +65,4 @@ public class Player : MonoBehaviour
 
         }
     }
+}

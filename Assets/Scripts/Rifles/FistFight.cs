@@ -118,14 +118,24 @@ public class FistFight : MonoBehaviour
 
             KnightAI knightAI = knight.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = knight.GetComponent<KnightAI2>();
+            Gangster ganster = knight.GetComponent<Gangster>();
+            PoliceMan policeman = knight.GetComponent<PoliceMan>();
 
-            if(knightAI != null)
+            if (knightAI != null)
             {
                 knightAI.TakeDamage(giveDamage);
             }
             if(knightAI2 != null)
             {
                 knightAI2.TakeDamage(giveDamage);
+            }
+            if (ganster != null)
+            {
+                ganster.characterHitDamage(giveDamage);
+            }
+            if (policeman != null)
+            {
+                policeman.characterHitDamage(giveDamage);
             }
         }
     }

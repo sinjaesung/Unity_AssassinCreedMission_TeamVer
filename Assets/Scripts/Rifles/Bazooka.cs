@@ -103,6 +103,8 @@ public class Bazooka : MonoBehaviour
             Debug.Log("Bazooka [[Hitinfo]]:" + hitInfo.transform.name);
             KnightAI knightAI = hitInfo.transform.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = hitInfo.transform.GetComponent<KnightAI2>();
+            Gangster ganster = hitInfo.transform.GetComponent<Gangster>();
+            PoliceMan policeman = hitInfo.transform.GetComponent<PoliceMan>();
 
             if (knightAI != null)
             {
@@ -113,6 +115,16 @@ public class Bazooka : MonoBehaviour
             {
                 Debug.Log("Bazooka knight2 Damage");
                 knightAI2.TakeDamage(giveDamage);
+            }
+            if(ganster != null)
+            {
+                Debug.Log("Bazooka gangster Damage");
+                ganster.characterHitDamage(giveDamage);
+            }
+            if (policeman != null)
+            {
+                Debug.Log("Bazooka policeman Damage");
+                policeman.characterHitDamage(giveDamage);
             }
         }
     }

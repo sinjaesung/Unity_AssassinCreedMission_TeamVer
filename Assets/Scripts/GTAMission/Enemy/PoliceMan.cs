@@ -11,7 +11,7 @@ public class PoliceMan : MonoBehaviour
     private float CurrentmovingSpeed;
     public float turningSpeed = 300f;
     public float stopSpeed = 1f;
-    private float characterHealth = 200f;
+    [SerializeField] private float characterHealth = 200f;
     public float presentHealth;
 
 
@@ -44,7 +44,7 @@ public class PoliceMan : MonoBehaviour
         audiosource = GetComponent<AudioSource>();
 
         presentHealth = characterHealth;
-        playerBody = GameObject.Find("Player");
+        playerBody = FindObjectOfType<PlayerScript>().gameObject;
         wantedlevelScript = GameObject.FindObjectOfType<WantedLevel>();
         CurrentmovingSpeed = movingSpeed;
         player = GameObject.FindObjectOfType<Player>();
@@ -54,12 +54,12 @@ public class PoliceMan : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        playerBody = GameObject.Find("Player");
+        playerBody = FindObjectOfType<PlayerScript>().gameObject;
         player = GameObject.FindObjectOfType<Player>();
     }
     private void Update()
     {
-        playerBody = GameObject.Find("Player");
+        playerBody = FindObjectOfType<PlayerScript>().gameObject;
         player = GameObject.FindObjectOfType<Player>();
 
         playerInvisionRadius = Physics.CheckSphere(transform.position, visionRadius, PlayerLayer);
@@ -128,14 +128,19 @@ public class PoliceMan : MonoBehaviour
     {
         //Vector3 PlayerToDirection = playerBody.transform.position - transform.position;
         //PlayerToDirection.y = 0;
-        playerBody = GameObject.Find("Player");
+        playerBody = FindObjectOfType<PlayerScript>().gameObject;
 
         if (!playerInshootingRadius)
         {
             transform.position += transform.forward * CurrentmovingSpeed * Time.deltaTime;
             if (playerBody != null)
             {
-                transform.LookAt(playerBody.transform);
+                Vector3 destinationDirection = new Vector3(playerBody.transform.position.x,
+                    playerBody.transform.position.y,playerBody.transform.position.z)
+                    - transform.position;
+                destinationDirection.y = 0;//대신에 리지드바디까지 처리하여 xz로만 y축 언덕형태의 slope지형또한 결과적으로 나아갈수있게끔처리.
+                // transform.LookAt(playerBody.transform);
+                transform.LookAt(destinationDirection);
             }
 
             animator.SetBool("Run", true);
@@ -151,7 +156,7 @@ public class PoliceMan : MonoBehaviour
         CurrentmovingSpeed = 0f;
 
         //transform.position += transform.forward * CurrentmovingSpeed * Time.deltaTime;
-        playerBody = GameObject.Find("Player");
+        playerBody = FindObjectOfType<PlayerScript>().gameObject;
         if (playerBody != null)
         {
             transform.LookAt(playerBody.transform);
@@ -166,7 +171,7 @@ public class PoliceMan : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ShootingRaycastArea.transform.position, ShootingRaycastArea.transform.forward, out hit, shootingRange))
             {
-                Debug.Log("Shooting" + hit.transform.name);
+                Debug.Log("Policeman Shooting" + hit.transform.name);
 
                 PlayerScript playerBody = hit.transform.GetComponent<PlayerScript>();
 
@@ -201,7 +206,7 @@ public class PoliceMan : MonoBehaviour
 
     private void characterDie()
     {
-        audiosource.Play();
+       // audiosource.Play();
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         CurrentmovingSpeed = 0f;
         shootingRange = 0f;

@@ -10,6 +10,7 @@ public class Mission2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //¹Ì¼Ç2
         if (missions.Mission1 == true && missions.Mission2 == false && missions.Mission3 == false && missions.Mission4 == false)
         {
             missions.Mission2 = true;

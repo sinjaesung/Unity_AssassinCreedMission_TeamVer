@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WantedLevel : MonoBehaviour
 {
-    public PlayerPrefs player;
+    public Player player;
     public GameObject level1Star;
     public bool level1 = false;
     public GameObject level2Star;
@@ -16,6 +16,11 @@ public class WantedLevel : MonoBehaviour
     public bool level4 = false;
     public GameObject level5Star;
     public bool level5 = false;
+
+    public void SetData(Player player_)
+    {
+        player = player_;
+    }
 
     private void Update()
     {
