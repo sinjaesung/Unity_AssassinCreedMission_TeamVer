@@ -6,6 +6,7 @@ public class ClimbingController : MonoBehaviour
 {
     public EnvironmentChecker ec;
     public PlayerScript playerScript;
+    //Å×½ºÆ®
 
     ClimbingPoint currentClimbPoint;
 
