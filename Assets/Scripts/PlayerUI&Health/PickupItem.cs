@@ -13,8 +13,11 @@ public class PickupItem : MonoBehaviour
     public Transform player;
     public Inventory inventory;
     public GameManager GM;
+    public Player playerdata;
 
     public GameObject RelWeapon;
+
+    public Missions missions;
 
     private void Start()
     {
@@ -27,6 +30,10 @@ public class PickupItem : MonoBehaviour
         player = player_;
         inventory = inventory_;
     }
+    public void SetPlayerData(Player player_)
+    {
+        playerdata = player_;
+    }
 
     private void Update()
     {
@@ -36,6 +43,12 @@ public class PickupItem : MonoBehaviour
             {
                 if (Input.GetKeyDown("f"))
                 {
+                    if(missions.Mission1==true && missions.Mission2==true && missions.Mission3==false && missions.Mission4 == false)
+                    {
+                        missions.Mission3 = true;
+                        playerdata.playerMoney += 800;
+                    }
+
                     if (ItemTag == "Sword")
                     {
                         Debug.Log(ItemTag + "Pickup");
