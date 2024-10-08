@@ -45,8 +45,9 @@ public class Grenade : MonoBehaviour
             Object obj = nearbyObject.GetComponent<Object>();
             KnightAI knightAI = nearbyObject.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = nearbyObject.GetComponent<KnightAI2>();
-            Gangster ganster = nearbyObject.GetComponent<Gangster>();
             PoliceMan policeman = nearbyObject.GetComponent<PoliceMan>();
+            CharacterNavigatorScript character = nearbyObject.GetComponent<CharacterNavigatorScript>();
+            Boss boss = nearbyObject.GetComponent<Boss>();
 
             if (obj != null)
             {
@@ -60,13 +61,17 @@ public class Grenade : MonoBehaviour
             {
                 knightAI2.TakeDamage(giveDamage);
             }
-            if (ganster != null)
+            if (character != null)
             {
-                ganster.characterHitDamage(giveDamage);
+                character.characterHitDamage(giveDamage);
             }
             if (policeman != null)
             {
                 policeman.characterHitDamage(giveDamage);
+            }
+            if (boss != null)
+            {
+                boss.characterHitDamage(giveDamage);
             }
         }
 

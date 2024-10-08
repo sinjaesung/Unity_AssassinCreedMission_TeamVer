@@ -15,6 +15,9 @@ public class SingleMeleeAttack : MonoBehaviour
     public float attackRadius;
     public LayerMask knightLayer;
 
+    public AudioSource SwordAudioPlayer; //  家府 犁积扁
+    [SerializeField] public AudioClip SwordClip; // 家府(var)
+    [SerializeField] public AudioClip SwordClip2; // 家府(var)
     private void Update()
     {
         if (!Input.GetMouseButtonDown(0))
@@ -86,29 +89,35 @@ public class SingleMeleeAttack : MonoBehaviour
 
         foreach (Collider knight in hitKnight)
         {
-            Debug.Log("SingleMeleeAttack [[Hitinfo]]:" + knight.transform.name);
+            Debug.Log("SingleMeleeAttack [[MeleeHitinfo]]:" + knight.transform.name);
 
             KnightAI knightAI = knight.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = knight.GetComponent<KnightAI2>();
-            Gangster ganster = knight.GetComponent<Gangster>();
             PoliceMan policeman = knight.GetComponent<PoliceMan>();
+            CharacterNavigatorScript character = knight.GetComponent<CharacterNavigatorScript>();
+            Boss boss = knight.GetComponent<Boss>();
 
             if (knightAI != null)
             {
-                knightAI.TakeDamage(giveDamage);
+                knightAI.TakeDamage(giveDamage,knight.ClosestPoint(attackArea.position),(knight.transform.position - attackArea.position));
             }
             if (knightAI2 != null)
             {
-                knightAI2.TakeDamage(giveDamage);
+                knightAI2.TakeDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
             }
-            if (ganster != null)
+            if (character != null)
             {
-                ganster.characterHitDamage(giveDamage);
+                character.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
             }
             if (policeman != null)
             {
-                policeman.characterHitDamage(giveDamage);
+                policeman.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
             }
+            if (boss != null)
+            {
+                boss.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+            }
+            SwordAudioPlayer.PlayOneShot(SwordClip);
         }
     }
 
@@ -167,11 +176,13 @@ public class SingleMeleeAttack : MonoBehaviour
     IEnumerator SingleAttack5()
     {
         anim.SetBool("SingleAttack5", true);
+        SwordAudioPlayer.PlayOneShot(SwordClip2);
         playerScript.movementSpeed = 0f;
         anim.SetFloat("movementValue", 0f);
         yield return new WaitForSeconds(0.2f);
         anim.SetBool("SingleAttack5", false);
         playerScript.movementSpeed = 5f;
         anim.SetFloat("movementValue", 0f);
+        SwordAudioPlayer.PlayOneShot(SwordClip2);
     }
 }

@@ -21,6 +21,12 @@ public class FistFight : MonoBehaviour
     [SerializeField] Transform RightHandPunch;
     [SerializeField] Transform LeftLegKick;
 
+    //Hit Effect
+    [SerializeField] GameObject HitEffect1_singlefist;
+    [SerializeField] GameObject HitEffect2_doublefist;
+    [SerializeField] GameObject HitEffect3_handkick;
+    [SerializeField] GameObject HitEffect4_kickcombo;
+    [SerializeField] GameObject HitEffect5_leftkick;
     private void Update()
     {
         if (!Input.GetMouseButtonDown(0))
@@ -114,12 +120,13 @@ public class FistFight : MonoBehaviour
 
         foreach(Collider knight in hitKnight)
         {
-            Debug.Log("FistFight [[Hitinfo]]:" + knight.transform.name);
+            Debug.Log("FistFight [[MeleeHitinfo]]:" + knight.transform.name);
 
             KnightAI knightAI = knight.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = knight.GetComponent<KnightAI2>();
-            Gangster ganster = knight.GetComponent<Gangster>();
             PoliceMan policeman = knight.GetComponent<PoliceMan>();
+            CharacterNavigatorScript character = knight.GetComponent<CharacterNavigatorScript>();
+            Boss boss = knight.GetComponent<Boss>();
 
             if (knightAI != null)
             {
@@ -129,13 +136,38 @@ public class FistFight : MonoBehaviour
             {
                 knightAI2.TakeDamage(giveDamage);
             }
-            if (ganster != null)
+            if (character != null)
             {
-                ganster.characterHitDamage(giveDamage);
+                character.characterHitDamage(giveDamage);
             }
             if (policeman != null)
             {
                 policeman.characterHitDamage(giveDamage);
+            }
+            if (boss != null)
+            {
+                boss.characterHitDamage(giveDamage);
+            }
+
+            if (FistFightVal == 1)
+            {
+                Instantiate(HitEffect1_singlefist, attackArea.transform.position, Quaternion.identity);
+            }
+            else if (FistFightVal == 2)
+            {
+                Instantiate(HitEffect2_doublefist, attackArea.transform.position, Quaternion.identity);
+            }
+            else if (FistFightVal == 3)
+            {
+                Instantiate(HitEffect3_handkick, attackArea.transform.position, Quaternion.identity);
+            }
+            else if (FistFightVal == 4)
+            {
+                Instantiate(HitEffect4_kickcombo, attackArea.transform.position, Quaternion.identity);
+            }
+            else if (FistFightVal == 5)
+            {
+                Instantiate(HitEffect5_leftkick, attackArea.transform.position, Quaternion.identity);
             }
         }
     }

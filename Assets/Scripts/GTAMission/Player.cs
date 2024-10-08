@@ -13,19 +13,21 @@ public class Player : MonoBehaviour
     public Missions missions;
 
     public PickupItem[] pickupItems;
-
+    public SaveGlow saveglow;//¹Ì¼Ç1
     private void Awake()
     {
         missions = FindObjectOfType<Missions>();
         FindObjectOfType<WantedLevel>().SetData(this);
         FindObjectOfType<MoneyUI>().SetData(this);
         pickupItems = FindObjectsOfType<PickupItem>();
+        saveglow = FindObjectOfType<SaveGlow>();
 
-        for (int e = 0; e < pickupItems.Length; e++)
+       /* for (int e = 0; e < pickupItems.Length; e++)
         {
             var item = pickupItems[e];
             item.SetPlayerData(this);
-        }
+        }*/
+        saveglow.SetData(this);
     }
     private void Update()
     {

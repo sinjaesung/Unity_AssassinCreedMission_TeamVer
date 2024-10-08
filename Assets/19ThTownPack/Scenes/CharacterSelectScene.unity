@@ -176,9 +176,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characters:
   - {fileID: 1728610861}
-  - {fileID: 8345239251032259862}
-  - {fileID: 1775190273}
-  - {fileID: 1824440423}
   selectedCharacter: 0
   loadSceneName: MainScene_onlyParkour
   startGame: 0
@@ -1269,11 +1266,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 94a9b011cd6c1b64b8596ec90e9ff471, type: 3}
   m_PrefabInstance: {fileID: 1066686315}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1775190273 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bda9261c0db1b8c4bb236f4418e65c00, type: 3}
-  m_PrefabInstance: {fileID: 2032548551}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1809973029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1343,11 +1335,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6355520796361531119, guid: 6e5004ebc38881142a21772fefe24af6, type: 3}
   m_PrefabInstance: {fileID: 1809973029}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1824440423 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f92b615e05ed17249a3424f856f4acbe, type: 3}
-  m_PrefabInstance: {fileID: 1649400826}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1900883536
 GameObject:

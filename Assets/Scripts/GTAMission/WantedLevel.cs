@@ -24,7 +24,7 @@ public class WantedLevel : MonoBehaviour
 
     private void Update()
     {
-        if(player.currentkills == 1)
+        if(player.currentkills >= 1)
         {
             level1Star.SetActive(true);
             level1 = true;
@@ -48,7 +48,7 @@ public class WantedLevel : MonoBehaviour
             level4 = true;
         }
 
-        if (player.currentkills > 11)
+        if (player.currentkills >= 20)
         {
             level5Star.SetActive(true);
             level5 = true;

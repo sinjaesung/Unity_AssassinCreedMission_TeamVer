@@ -105,8 +105,9 @@ public class Rifle : MonoBehaviour
 
             KnightAI knightAI = hitInfo.transform.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = hitInfo.transform.GetComponent<KnightAI2>();
-            Gangster ganster = hitInfo.transform.GetComponent<Gangster>();
             PoliceMan policeman = hitInfo.transform.GetComponent<PoliceMan>();
+            CharacterNavigatorScript character = hitInfo.transform.GetComponent<CharacterNavigatorScript>();
+            Boss boss = hitInfo.transform.GetComponent<Boss>();
 
             if (knightAI != null)
             {
@@ -118,15 +119,20 @@ public class Rifle : MonoBehaviour
                 Debug.Log("Rifle knight2 Damage");
                 knightAI2.TakeDamage(giveDamage);
             }
-            if (ganster != null)
+            if (character != null)
             {
-                Debug.Log("Rifle gangster Damage");
-                ganster.characterHitDamage(giveDamage);
+                Debug.Log("Rifle character Damage");
+                character.characterHitDamage(giveDamage);
             }
             if (policeman != null)
             {
                 Debug.Log("Rifle policeman Damage");
                 policeman.characterHitDamage(giveDamage);
+            }
+            if (boss != null)
+            {
+                Debug.Log("Bazooka boss Damage");
+                boss.characterHitDamage(giveDamage);
             }
         }
     }

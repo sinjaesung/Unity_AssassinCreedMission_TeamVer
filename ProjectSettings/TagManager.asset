@@ -14,6 +14,10 @@ TagManager:
   - Health
   - Energy
   - CutCam1
+  - TARGET_A
+  - TARGET_B
+  - TARGET_C
+  - TARGET_BOSS
   layers:
   - Default
   - TransparentFX

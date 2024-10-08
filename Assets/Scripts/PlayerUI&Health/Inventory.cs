@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
     public GameObject Weapon4;
     public bool isWeapon4Picked = false;
     public bool isWeapon4Active = false;
-    public GrenadeThrower grenadethrower;
+   // public GrenadeThrower grenadethrower;
 
     [Header("Scripts")]
     public FistFight fistFight;
@@ -57,6 +57,15 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
+        //총무기들의 경우 장전중에는 무기변경 제한
+        if (playershooterScript.gun.state == Gun.State.Reloading ||
+        playershooter2Script.gun.state == Gun.State.Reloading ||
+        playershooter3Script.gun.state == Gun.State.Reloading
+        )
+        {
+            return;
+        }
+
         if (isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && fistFightMode == false)
         {
             NoWeapon.SetActive(true);
@@ -127,15 +136,15 @@ public class Inventory : MonoBehaviour
             CurrentWeapon4.SetActive(false);
         }
 
-        if(GM.numberofGrenades <=0 && isWeapon4Active == true)
+       /* if(GM.numberofGrenades <=0 && isWeapon4Active == true)
         {
             Weapon4.SetActive(false);
             isWeapon4Active = false;
             CurrentWeapon4.SetActive(false);
             isRifleActive();
-        }
+        }*/
 
-        if(Input.GetKeyDown("5") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberofHealth > 0 && playerScript.presentHealth < 95)
+       /* if(Input.GetKeyDown("5") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberofHealth > 0 && playerScript.presentHealth < 95)
         {
             StartCoroutine(IncreaseHealth()); 
         }
@@ -143,7 +152,7 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown("6") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberofEnergy > 0 && playerScript.presentEnergy < 95)
         {
             StartCoroutine(IncreaseEnergy()); 
-        }
+        }*/
     }
 
     void isRifleActive()
@@ -171,8 +180,9 @@ public class Inventory : MonoBehaviour
 
         if(isWeapon2Active == true)
         {
-            StartCoroutine(Weapon2GO());
-            rifle.GetComponent<Rifle>().enabled = true;
+            StartCoroutine(Weapon2GO());//Rifle
+            //rifle.GetComponent<Rifle>().enabled = true;
+            playershooterScript.enabled = true;
             fistFight.GetComponent<FistFight>().enabled = false;
             anim.SetBool("RifleActive", true);
             anim.SetBool("FistFightActive", false);
@@ -180,14 +190,17 @@ public class Inventory : MonoBehaviour
         if(isWeapon2Active == false)
         {
             StartCoroutine(Weapon2GO());
+            playershooterScript.enabled = false;
             rifle.GetComponent<Rifle>().enabled = false;
             anim.SetBool("RifleActive", false);
         }
 
         if (isWeapon3Active == true)
         {
+            //바주카
             StartCoroutine(Weapon3GO());
-            bazooka.GetComponent<Bazooka>().enabled = true;
+            //bazooka.GetComponent<Bazooka>().enabled = true;
+            playershooterScript3Script.enabled = true;
             fistFight.GetComponent<FistFight>().enabled = false;
             anim.SetBool("FistFightActive", false);
             anim.SetBool("BazookaActive", true);
@@ -199,7 +212,7 @@ public class Inventory : MonoBehaviour
             anim.SetBool("BazookaActive", false);
         }
 
-        if (isWeapon4Active == true)
+        /*if (isWeapon4Active == true)
         {
             StartCoroutine(Weapon4GO());
             anim.SetBool("FistFightActive", false);
@@ -210,7 +223,7 @@ public class Inventory : MonoBehaviour
         {
             StartCoroutine(Weapon4GO());
             grenadethrower.GetComponent<GrenadeThrower>().enabled = false;
-        }
+        }*/
     }
 
     IEnumerator Weapon1GO()
@@ -262,7 +275,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    IEnumerator IncreaseHealth()
+    /*IEnumerator IncreaseHealth()
     {
         anim.SetBool("Drink", true);
         yield return new WaitForSeconds(1.5f);
@@ -279,5 +292,5 @@ public class Inventory : MonoBehaviour
         GM.numberofEnergy -= 1;
         playerScript.presentEnergy = 100f;
         playerScript.energybar.GiveFullEnergy(100f);
-    }
+    }*/
 }
