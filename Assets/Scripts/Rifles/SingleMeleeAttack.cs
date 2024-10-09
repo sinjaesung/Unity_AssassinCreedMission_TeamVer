@@ -101,10 +101,10 @@ public class SingleMeleeAttack : MonoBehaviour
             {
                 knightAI.TakeDamage(giveDamage,knight.ClosestPoint(attackArea.position),(knight.transform.position - attackArea.position));
             }
-            if (knightAI2 != null)
+           /* if (knightAI2 != null)
             {
                 knightAI2.TakeDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
-            }
+            }*/
             if (character != null)
             {
                 character.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     [Header("Player Health & Energy")]
-    private float playerHealth = 8000f;
+    [SerializeField] private float playerHealth = 8000f;
     public float presentHealth;
     public HealthBar healthbar;
     private float playerEnergy = 100f;
@@ -42,6 +42,8 @@ public class PlayerScript : MonoBehaviour
 
     public PickupItem[] pickupItems;
     public Inventory inventory;
+
+    public GameObject GameOverObj;
     private void Awake()
     {
         Debug.Log("프리팹 캐릭터 스폰"+transform.name);
@@ -109,6 +111,7 @@ public class PlayerScript : MonoBehaviour
                 LedgeInfo = ledgeInfo;
                 PlayerLedgeMovement();
                 Debug.Log("player on ledge");
+                //[튜토리얼조작] 플레이어가 릿지위에있는경우에 JumpDown(스페이스) 하라고 표시
             }
 
             Debug.Log("Ledge에 있었을땐 velocity.magnitude:" + velocity.magnitude);
@@ -130,6 +133,7 @@ public class PlayerScript : MonoBehaviour
     }
     void PlayerMovement()
     {
+        //[튜토리얼조작] 플레이어가 움직이지 않을때에는 상하좌우 아이콘 숨김
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
@@ -144,6 +148,8 @@ public class PlayerScript : MonoBehaviour
         if (movementAmount > 0 && moveDir.magnitude > 0.2f)
         {
             requireRotation = Quaternion.LookRotation(moveDir);
+
+            //[튜토리얼조작] 플레이어가 움직이고있을때만 상하좌우움직이고있다 아이콘표시
         }
 
         moveDir = requiredMoveDir;
@@ -266,7 +272,10 @@ public class PlayerScript : MonoBehaviour
     private void PlayerDie()
     {
         Cursor.lockState = CursorLockMode.None;
-        Object.Destroy(gameObject, 1.0f);
+        //Object.Destroy(gameObject, 1.0f);
+
+        GameOverObj.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void playerEnergyDecrease(float energyDecrease)

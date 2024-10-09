@@ -59,6 +59,7 @@ public class ClimbingController : MonoBehaviour
         }
         else
         {
+            //[튜토리얼조작] 어딘가에 매달려있을때에 한해서 점프월가능하다 표현필요
             //leave climb point
             if (Input.GetButton("Leave") && !playerScript.playerInAction)
             {
@@ -85,42 +86,47 @@ public class ClimbingController : MonoBehaviour
             var neighbour = currentClimbPoint != null ? currentClimbPoint.GetNeighbour(inputDirection) : null;
             if (neighbour == null) return;
 
-            if (neighbour.connectionType == ConnectionType.Jump && Input.GetButton("Jump"))
+            if (neighbour.connectionType == ConnectionType.Jump)
             {
+                //[튜토리얼조작] 상하좌우+space키로 이동가능하다는 표현
                 currentClimbPoint = neighbour.climbingPoint;
 
-                if (currentClimbPoint != null)
+                if (Input.GetButton("Jump"))
                 {
-                    if (neighbour.pointDirection.y == 1)
+                    if (currentClimbPoint != null)
                     {
-                        InOutValue = 0.1f;
-                        UpDownValue = 0.05f;
-                        LeftRightValue = 0.25f;
-                        StartCoroutine(ClimbToLedge("ClimbUp", currentClimbPoint.transform, 0.34f, 0.64f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
-                    }
-                    else if (neighbour.pointDirection.y == -1)
-                    {
-                        InOutValue = 0.2f;
-                        UpDownValue = 0.05f;
-                        LeftRightValue = 0.25f;
-                        StartCoroutine(ClimbToLedge("ClimbDown", currentClimbPoint.transform, 0.31f, 0.68f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
-                    }
-                    else if (neighbour.pointDirection.x == 1)
-                    {
-                        StartCoroutine(ClimbToLedge("ClimbRight", currentClimbPoint.transform, 0.20f, 0.51f));
-                    }
-                    else if (neighbour.pointDirection.x == -1)
-                    {
-                        InOutValue = 0.1f;
-                        UpDownValue = 0.04f;
-                        LeftRightValue = 0.25f;
+                        if (neighbour.pointDirection.y == 1)
+                        {
+                            InOutValue = 0.1f;
+                            UpDownValue = 0.05f;
+                            LeftRightValue = 0.25f;
+                            StartCoroutine(ClimbToLedge("ClimbUp", currentClimbPoint.transform, 0.34f, 0.64f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
+                        }
+                        else if (neighbour.pointDirection.y == -1)
+                        {
+                            InOutValue = 0.2f;
+                            UpDownValue = 0.05f;
+                            LeftRightValue = 0.25f;
+                            StartCoroutine(ClimbToLedge("ClimbDown", currentClimbPoint.transform, 0.31f, 0.68f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
+                        }
+                        else if (neighbour.pointDirection.x == 1)
+                        {
+                            StartCoroutine(ClimbToLedge("ClimbRight", currentClimbPoint.transform, 0.20f, 0.51f));
+                        }
+                        else if (neighbour.pointDirection.x == -1)
+                        {
+                            InOutValue = 0.1f;
+                            UpDownValue = 0.04f;
+                            LeftRightValue = 0.25f;
 
-                        StartCoroutine(ClimbToLedge("ClimbLeft", currentClimbPoint.transform, 0.20f, 0.51f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
+                            StartCoroutine(ClimbToLedge("ClimbLeft", currentClimbPoint.transform, 0.20f, 0.51f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
+                        }
                     }
                 }
             }
             else if (neighbour.connectionType == ConnectionType.Move)
             {
+                //[튜토리얼조작] 매달려있고,Move connectionType인 경우에 한해서 좌우 이미지ui만 나오도록
                 currentClimbPoint = neighbour.climbingPoint;
 
                 if (currentClimbPoint != null)

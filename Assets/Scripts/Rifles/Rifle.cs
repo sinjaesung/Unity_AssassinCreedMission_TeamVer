@@ -109,7 +109,7 @@ public class Rifle : MonoBehaviour
             CharacterNavigatorScript character = hitInfo.transform.GetComponent<CharacterNavigatorScript>();
             Boss boss = hitInfo.transform.GetComponent<Boss>();
 
-            if (knightAI != null)
+           /* if (knightAI != null)
             {
                 Debug.Log("Rifle knight1 Damage");
                 knightAI.TakeDamage(giveDamage);
@@ -133,7 +133,7 @@ public class Rifle : MonoBehaviour
             {
                 Debug.Log("Bazooka boss Damage");
                 boss.characterHitDamage(giveDamage);
-            }
+            }*/
         }
     }
 

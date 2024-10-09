@@ -4,7 +4,8 @@ using UnityEngine;
 // 알맞은 애니메이션을 재생하고 IK를 사용해 캐릭터 양손이 총에 위치하도록 조정
 public class PlayerShooter2 : MonoBehaviour
 {
-    public Gun gun; // 사용할 총
+    //저격총
+    public Gun_Sniper gun; // 사용할 총
     public Transform gunPivot; // 총 배치의 기준점
 
     private Animator playerAnimator; // 애니메이터 컴포넌트
@@ -65,7 +66,7 @@ public class PlayerShooter2 : MonoBehaviour
 
 
         //총을 재장전한다는 입력을 감지했을 때
-        if (Input.GetKey("R"))
+        if (Input.GetKey(KeyCode.R))
         {
             Debug.Log("건 리로드");
             //재장전

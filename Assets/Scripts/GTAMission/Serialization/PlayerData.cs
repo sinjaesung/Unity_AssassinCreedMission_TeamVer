@@ -25,10 +25,10 @@ public class PlayerData
         position[1] = player.transform.position.y;
         position[2] = player.transform.position.z;
 
-        isWeapon1Picked = player.inventory.isWeapon1Picked;
+      /*  isWeapon1Picked = player.inventory.isWeapon1Picked;
         isWeapon2Picked = player.inventory.isWeapon2Picked;
         isWeapon3Picked = player.inventory.isWeapon3Picked;
-        isWeapon4Picked = player.inventory.isWeapon4Picked;
+        isWeapon4Picked = player.inventory.isWeapon4Picked;*/
 
         Mission1 = player.missions.Mission1;
         Mission2 = player.missions.Mission2;

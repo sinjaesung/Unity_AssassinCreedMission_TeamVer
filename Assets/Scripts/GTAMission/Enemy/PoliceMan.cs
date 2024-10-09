@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine.AI;
 //using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PoliceMan : MonoBehaviour
 {
@@ -51,9 +52,13 @@ public class PoliceMan : MonoBehaviour
     public ParticleSystem hitEffect; // 피격시 재생할 파티클 효과
     public AudioClip deathSound; // 사망시 재생할 소리
     public AudioClip hitSound; // 피격시 재생할 소리
-    private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트
 
+    private Renderer enemyRenderer; // 렌더러 컴포넌트
+    public Color OriginalColor;
+    public bool IsPaused = false;//얼려졌을때 또는 스턴기
+    public List<string> StateList = new List<string>();
 
+    public Image healthbar;
     public enum Status
     {
         Walk = 0,
@@ -62,9 +67,12 @@ public class PoliceMan : MonoBehaviour
     }
     private void Start()
     {
+        OriginalColor = Color.white;
         audiosource = GetComponent<AudioSource>();
 
         presentHealth = characterHealth;
+        healthbar.fillAmount = presentHealth / characterHealth;
+
         playerBody = FindObjectOfType<PlayerScript>().gameObject;
         wantedlevelScript = GameObject.FindObjectOfType<WantedLevel>();
         CurrentmovingSpeed = movingSpeed;
@@ -72,6 +80,46 @@ public class PoliceMan : MonoBehaviour
         StartCoroutine(StartSetup());
 
         navagent = GetComponent<NavMeshAgent>();
+        enemyRenderer = GetComponentInChildren<Renderer>();
+        StartCoroutine(UpdateStateCoroutine());
+    }
+    private void OnDisable()
+    {
+        Debug.Log("Enemy오브젝트 제거시 모든 코루틴 종료");
+        StopAllCoroutines();
+    }
+    //상태관련
+    public void AddStateList(string item)
+    {
+        StateList.Add(item);
+    }
+    public void DeleteStateListItem(string item)
+    {
+        for (int n = 0; n < StateList.Count; n++)
+        {
+            Debug.Log("Enemy타깃 " + n + $"| {StateList[n]}");
+        }
+        Debug.Log("Enemy타깃 오브젝트 Freeze속성 있는거 모두 제거!" + transform.name);
+        StateList.RemoveAll(e => e == "Freeze");
+    }
+
+    private IEnumerator UpdateStateCoroutine()
+    {
+        while (true)
+        {
+            if (StateList.Contains("Freeze"))
+            {
+                Debug.Log("해당 오브젝트에서 얼려진 상태가 발견된경우, 색상컬러 파랗게하는거랑,움직임 멈추게끔");
+                enemyRenderer.material.color = Color.blue;
+            }
+            else
+            {
+                Debug.Log("해당 오브젝트에서 얼려진 상태가 해제");
+                enemyRenderer.material.color = OriginalColor;
+            }
+
+            yield return null;
+        }
     }
     private IEnumerator StartSetup()
     {
@@ -88,30 +136,36 @@ public class PoliceMan : MonoBehaviour
         playerInvisionRadius = Physics.CheckSphere(transform.position, visionRadius, PlayerLayer);
         playerInshootingRadius = Physics.CheckSphere(transform.position, shootingRadius, PlayerLayer);
 
-       
-        if (playerInvisionRadius && !playerInshootingRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
-            wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
+        if (IsPaused == false)
         {
-            //수배가 내려지고 범위내에 있으면 추적
-            //Debug.Log("PoliceOFficer ChasePlayer조건 충족:");
-            nowStatus = Status.Chase;
-            ChasePlayer();
-        }
-        else if (playerInvisionRadius && playerInshootingRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
-            wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
-        {
-            //수배가 내려지고 범위내에,공격범위까지 있으면 공격
-            //  Debug.Log("PoliceOFficer ShootPlayer조건 충족:");
-            nowStatus = Status.Shoot;
-            ShootPlayer();
+            if (playerInvisionRadius && !playerInshootingRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
+                       wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
+            {
+                //수배가 내려지고 범위내에 있으면 추적
+                //Debug.Log("PoliceOFficer ChasePlayer조건 충족:");
+                nowStatus = Status.Chase;
+                ChasePlayer();
+            }
+            else if (playerInvisionRadius && playerInshootingRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
+                wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
+            {
+                //수배가 내려지고 범위내에,공격범위까지 있으면 공격
+                //  Debug.Log("PoliceOFficer ShootPlayer조건 충족:");
+                nowStatus = Status.Shoot;
+                ShootPlayer();
+            }
+            else
+            {
+                //수배가 내려졌으나 공격,인식 범위에 없거나,공격범위에 있는데 수배가 안내려졌으면 걷는다.
+                //Debug.Log("PoliceOFficer walk조건 충족:");
+                nowStatus = Status.Walk;
+                Walk();
+            }
         }
         else
         {
-            //수배가 내려졌으나 공격,인식 범위에 없거나,공격범위에 있는데 수배가 안내려졌으면 걷는다.
-            //Debug.Log("PoliceOFficer walk조건 충족:");
-            nowStatus = Status.Walk;
-            Walk();
-        }
+            Debug.Log("PoliceMan얼려져 있는 상태>>");
+        } 
     }
 
     public void Walk()
@@ -179,7 +233,7 @@ public class PoliceMan : MonoBehaviour
             animator.SetBool("Shoot", false);
 
             CurrentmovingSpeed = runningSpeed;
-        }
+        }  
     }
 
     public void ShootPlayer()
@@ -229,15 +283,28 @@ public class PoliceMan : MonoBehaviour
     {
         previouslyShoot = false;
     }
+    public void characterHitDamage(float takeDamage)
+    {
+        presentHealth -= takeDamage;
+        healthbar.fillAmount = presentHealth / characterHealth;
 
+        if (presentHealth <= 0)
+        {
+            if (!isDied)
+            {
+                characterDie();
+            }
+        }
+    }
     public void characterHitDamage(float takeDamage, Vector3 hitPoint, Vector3 hitNormal)
     {
         presentHealth -= takeDamage;
+        healthbar.fillAmount = presentHealth / characterHealth;
 
         if (!isDied)
         {
             //죽지 않았을 때에만 피격 효과 발동 => 효과음,피가 튀는 이펙트 효과
-            enemyAudioPlayer.PlayOneShot(hitSound);
+            audiosource.PlayOneShot(hitSound);
 
             //이펙트의 위치 : 맞은 위치
             //이펙트가 튀는 방향: 맞은 방향
@@ -267,10 +334,10 @@ public class PoliceMan : MonoBehaviour
 
         //AI 추격 중지
         navagent.isStopped = true;
-        navagent.enabled = false;
+       // navagent.enabled = false;
 
         //이펙트 실행
-        enemyAudioPlayer.PlayOneShot(deathSound);
+        audiosource.PlayOneShot(deathSound);
 
         Object.Destroy(gameObject, 6.0f);
         player.currentkills += 1;

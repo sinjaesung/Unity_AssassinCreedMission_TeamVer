@@ -132,10 +132,10 @@ public class FistFight : MonoBehaviour
             {
                 knightAI.TakeDamage(giveDamage);
             }
-            if(knightAI2 != null)
+            /*f(knightAI2 != null)
             {
                 knightAI2.TakeDamage(giveDamage);
-            }
+            }*/
             if (character != null)
             {
                 character.characterHitDamage(giveDamage);

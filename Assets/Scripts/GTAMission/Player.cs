@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -14,6 +15,8 @@ public class Player : MonoBehaviour
 
     public PickupItem[] pickupItems;
     public SaveGlow saveglow;//¹Ì¼Ç1
+
+    MiniMapScript minimap;
     private void Awake()
     {
         missions = FindObjectOfType<Missions>();
@@ -22,6 +25,8 @@ public class Player : MonoBehaviour
         pickupItems = FindObjectsOfType<PickupItem>();
         saveglow = FindObjectOfType<SaveGlow>();
 
+        minimap = FindObjectOfType<MiniMapScript>();
+        minimap.player = transform;
        /* for (int e = 0; e < pickupItems.Length; e++)
         {
             var item = pickupItems[e];
@@ -55,10 +60,10 @@ public class Player : MonoBehaviour
 
             transform.position = position;
 
-            inventory.isWeapon1Picked = data.isWeapon1Picked;
+           /* inventory.isWeapon1Picked = data.isWeapon1Picked;
             inventory.isWeapon2Picked = data.isWeapon2Picked;
             inventory.isWeapon3Picked = data.isWeapon3Picked;
-            inventory.isWeapon4Picked = data.isWeapon4Picked;
+            inventory.isWeapon4Picked = data.isWeapon4Picked;*/
 
             missions.Mission1 = data.Mission1;
             missions.Mission2 = data.Mission2;

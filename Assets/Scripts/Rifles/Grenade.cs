@@ -49,7 +49,7 @@ public class Grenade : MonoBehaviour
             CharacterNavigatorScript character = nearbyObject.GetComponent<CharacterNavigatorScript>();
             Boss boss = nearbyObject.GetComponent<Boss>();
 
-            if (obj != null)
+            /*if (obj != null)
             {
                 obj.objectHitDamage(giveDamage);
             }
@@ -72,7 +72,7 @@ public class Grenade : MonoBehaviour
             if (boss != null)
             {
                 boss.characterHitDamage(giveDamage);
-            }
+            }*/
         }
 
         Destroy(gameObject);

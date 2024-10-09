@@ -107,7 +107,7 @@ public class Bazooka : MonoBehaviour
             CharacterNavigatorScript character = hitInfo.transform.GetComponent<CharacterNavigatorScript>();
             Boss boss = hitInfo.transform.GetComponent<Boss>();
 
-            if (knightAI != null)
+           /* if (knightAI != null)
             {
                 Debug.Log("Bazooka knight1 Damage");
                 knightAI.TakeDamage(giveDamage);
@@ -131,7 +131,7 @@ public class Bazooka : MonoBehaviour
             {
                 Debug.Log("Bazooka boss Damage");
                 boss.characterHitDamage(giveDamage);
-            }
+            }*/
         }
     }
 

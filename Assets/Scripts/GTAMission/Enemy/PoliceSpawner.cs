@@ -33,7 +33,7 @@ public class PoliceSpawner : MonoBehaviour
             //obj.transform.position = child.position + new Vector3(0, 6f, 0);
             obj.GetComponent<NavMeshAgent>().Warp(child.position);
 
-            yield return new WaitForSeconds(0.7f);
+            yield return null;
 
             count++;
         }
@@ -53,7 +53,7 @@ public class PoliceSpawner : MonoBehaviour
             //obj.transform.position = child.position + new Vector3(0, 6f, 0);
             obj.GetComponent<NavMeshAgent>().Warp(child.position + new Vector3(0, 6f, 0));
 
-            yield return new WaitForSeconds(0.3f);
+            yield return null;
 
             count++;
         }

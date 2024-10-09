@@ -61,7 +61,7 @@ public class PlayerShooter3 : MonoBehaviour
         }
 
         //총을 재장전한다는 입력을 감지했을 때
-        if (Input.GetKey("R"))
+        if (Input.GetKey(KeyCode.R))
         {
             //재장전
             if (gun.Reload() == true)//이 타이밍에 이미 리로드 함수는 실행됐다.

@@ -42,8 +42,10 @@ public class Gun : MonoBehaviour
 
     public Animator PlayerAnimator;
 
+    public Camera maincamera;
     private void Awake()
     {
+        maincamera = Camera.main;
         PlayerAnimator = GetComponentInParent<Animator>();
 
         // 사용할 컴포넌트들의 참조를 가져오기
@@ -148,10 +150,10 @@ public class Gun : MonoBehaviour
             {
                 knightAI.TakeDamage(damage, hit.point, hit.normal);
             }
-            if (knightAI2 != null)
+            /*if (knightAI2 != null)
             {
                 knightAI2.TakeDamage(damage, hit.point, hit.normal);
-            }
+            }*/
             if (character != null)
             {
                 character.characterHitDamage(damage, hit.point, hit.normal);
@@ -225,7 +227,7 @@ public class Gun : MonoBehaviour
         bulletLineRenderer.enabled = true;
 
         //0.03초만 선이 보이고, 이후 바로 선이 사라진다.
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(1.2f);
 
         bulletLineRenderer.enabled = false;
     }// 재장전 시도

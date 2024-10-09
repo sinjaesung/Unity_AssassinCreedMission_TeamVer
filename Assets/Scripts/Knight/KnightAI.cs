@@ -233,7 +233,18 @@ public class KnightAI : MonoBehaviour
         this.destination = destination;
         destinationReached = false;
     }
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
 
+        if (currentHealth <= 0f)
+        {
+            if (!isDied)
+            {
+                Die();
+            }
+        }
+    }
     public void TakeDamage(float amount,Vector3 hitPoint,Vector3 hitNormal)
     {
         currentHealth -= amount;

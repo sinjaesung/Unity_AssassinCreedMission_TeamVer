@@ -37,7 +37,7 @@ public class PickupItem : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, player.transform.position) < itemRadius)
             {
-                if (Input.GetKeyDown("f"))
+               /* if (Input.GetKeyDown("f"))
                 {
 
                     if (ItemTag == "Sword")
@@ -82,7 +82,7 @@ public class PickupItem : MonoBehaviour
                     }
 
                     ItemToPick.SetActive(false);
-                }
+                }*/
             }
         }
        

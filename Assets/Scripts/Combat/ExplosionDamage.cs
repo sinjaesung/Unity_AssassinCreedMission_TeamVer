@@ -31,6 +31,32 @@ public class ExplosionDamage : MonoBehaviour
             //맞은 지점: 총알이 다은 지점
             //맞은 회전값: 부딪힌 장소의 회전값 - hit.normal
             //target.OnDamage(damage);
+            KnightAI knightAI = other.GetComponent<KnightAI>();
+            KnightAI2 knightAI2 = other.GetComponent<KnightAI2>();
+            PoliceMan policeman = other.GetComponent<PoliceMan>();
+            CharacterNavigatorScript character = other.GetComponent<CharacterNavigatorScript>();
+            Boss boss = other.GetComponent<Boss>();
+
+            if (knightAI != null)
+            {
+                knightAI.TakeDamage(damage);
+            }
+            /*f(knightAI2 != null)
+            {
+                knightAI2.TakeDamage(giveDamage);
+            }*/
+            if (character != null)
+            {
+                character.characterHitDamage(damage);
+            }
+            if (policeman != null)
+            {
+                policeman.characterHitDamage(damage);
+            }
+            if (boss != null)
+            {
+                boss.characterHitDamage(damage);
+            }
         }
     }
 

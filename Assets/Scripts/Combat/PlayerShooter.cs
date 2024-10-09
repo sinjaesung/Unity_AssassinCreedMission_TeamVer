@@ -65,7 +65,7 @@ public class PlayerShooter : MonoBehaviour
 
 
         //총을 재장전한다는 입력을 감지했을 때
-        if (Input.GetKey("R"))
+        if (Input.GetKey(KeyCode.R))
         {
             Debug.Log("건 리로드");
             //재장전
