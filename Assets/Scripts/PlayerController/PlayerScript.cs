@@ -21,6 +21,8 @@ public class PlayerScript : MonoBehaviour
     Quaternion requireRotation;
     bool playerControl = true;
 
+    public float JumpPower;
+
     public bool playerInAction { get; private set; }
 
     [Header("Player Animator")]
@@ -69,9 +71,18 @@ public class PlayerScript : MonoBehaviour
             item.SetData(transform, inventory);
         }
     }
-
+    public void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            animator.SetBool("NormalJump", true);
+            fallingSpeed = JumpPower * 6 * Time.deltaTime;
+            Debug.Log("PlayerScript Jump시에 fallingSpeed>>"+fallingSpeed);
+        }
+    }
     private void Update()
     {
+        animator.SetBool("NormalJump", false);
         parkouractionUi.SubActionClear();
 
         if (presentEnergy <= 0)
@@ -109,8 +120,15 @@ public class PlayerScript : MonoBehaviour
         velocity = Vector3.zero;
         if (onSurface)
         {
+
             fallingSpeed = -0.5f;
             velocity = moveDir * movementSpeed;
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                animator.SetBool("NormalJump", true);
+                fallingSpeed = JumpPower * 2;
+                Debug.Log("PlayerScript Jump시에 fallingSpeed>>" + fallingSpeed);
+            }
 
             parkouractionUi.BasicActionClear();
             parkouractionUi.JumpDownAction.SetActive(false);
@@ -127,6 +145,7 @@ public class PlayerScript : MonoBehaviour
             
             Debug.Log("Ledge에 있었을땐 velocity.magnitude:" + velocity.magnitude);
             animator.SetFloat("movementValue", velocity.magnitude / movementSpeed, 0.2f, Time.deltaTime);
+            //Jump();
         }
         else
         {
@@ -139,6 +158,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         velocity.y = fallingSpeed;
+        Debug.Log("PlayerScript fallingSpeed>>" + fallingSpeed);
 
         PlayerMovement();
         SurfaceCheck();
@@ -158,6 +178,7 @@ public class PlayerScript : MonoBehaviour
 
         requiredMoveDir = MCC.flatRotation * movementInput;
 
+        Debug.Log("PlayerScript Request velocity>>" + velocity + "," + velocity * Time.deltaTime);
         Cc.Move(velocity * Time.deltaTime);
 
         if (movementAmount > 0 && moveDir.magnitude > 0.2f)
@@ -171,7 +192,6 @@ public class PlayerScript : MonoBehaviour
         moveDir = requiredMoveDir;
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, rotSpeed * Time.deltaTime);
-
     }
 
     void SurfaceCheck()

@@ -36,6 +36,7 @@ public class FistFight : MonoBehaviour
     private void Update()
     {
         enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
+        combatactionui.GunReloadAction.SetActive(false);
 
         if (enemyInvisionRadius)
         {

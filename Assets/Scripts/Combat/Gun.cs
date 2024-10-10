@@ -43,6 +43,8 @@ public class Gun : MonoBehaviour
     public Animator PlayerAnimator;
 
     public Camera maincamera;
+
+    public CombatActionUI combatactionui;
     private void Awake()
     {
         maincamera = Camera.main;
@@ -60,7 +62,7 @@ public class Gun : MonoBehaviour
         //라인렌더를 잠시 비활성화
         bulletLineRenderer.enabled = false;
     }
-    private void OnEnable()
+    private void Start()
     {
         // 총 상태 초기화
 
@@ -74,6 +76,10 @@ public class Gun : MonoBehaviour
         state = State.Ready;
         //총을 쏜 시점으로 0으로 초기화.
         lastFireTime = 0;
+    }
+    private void OnEnable()
+    {
+        
     }
 
     // 발사 시도
@@ -97,6 +103,18 @@ public class Gun : MonoBehaviour
         else
         {
             Debug.Log("총 쿨타임");
+        }
+    }
+    private void Update()
+    {
+        if(magAmmo <= 0)
+        {
+            combatactionui.GunReloadAction.SetActive(true);
+            state = State.Empty;
+        }
+        else
+        {
+            combatactionui.GunReloadAction.SetActive(false);
         }
     }
 
@@ -192,6 +210,7 @@ public class Gun : MonoBehaviour
         //만약 탄창이 0개면 -> 총의 상태를 '탄창 빔'으로 만든다.
         if (magAmmo <= 0)
         {
+            combatactionui.GunReloadAction.SetActive(true);
             state = State.Empty;
         }
 

@@ -19,14 +19,35 @@ public class Gun_Sniper : Gun
 
     public float normalFOV;
 
-    public CombatActionUI combatactionui;
-
     private void Start()
     {
+        // 총 상태 초기화
+
+        //현재 탄창을 가득 채운다.
+        //총의 상태를 '준비 상태'로 만든다.
+        //총을 쏜 시점을 0으로 초기화.
+
+        //현재 탄창을 가득 채운다.
+        magAmmo = magCapacity;
+        //총의 상태를 준비상태로 만든다.
+        state = State.Ready;
+        //총을 쏜 시점으로 0으로 초기화.
+        lastFireTime = 0;
+
         normalFOV = maincamera.fieldOfView;
     }
     void Update()
     {
+        if (magAmmo <= 0)
+        {
+            combatactionui.GunReloadAction.SetActive(true);
+            state = State.Empty;
+        }
+        else
+        {
+            combatactionui.GunReloadAction.SetActive(false);
+        }
+
         // Check if the right mouse button is being held down
         if (Input.GetMouseButton(1))
         {

@@ -168,6 +168,10 @@ public class Wand : MonoBehaviour
             // If the projectile reaches the target, destroy it
             if (Vector3.Distance(projectile.transform.position, target) < 0.1f)
             {
+                if (projectile.GetComponent<Projectile>() != null)
+                {
+                    projectile.GetComponent<Projectile>().ExplodesSpawnDirect(projectile.transform.position);
+                }
                 Destroy(projectile);
                 yield break;
             }

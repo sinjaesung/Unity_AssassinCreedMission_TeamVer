@@ -40,10 +40,12 @@ public class WandShooter1 : MonoBehaviour
     private void Update()
     {
         enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
+        combatactionui.GunReloadAction.SetActive(false);
 
         if (enemyInvisionRadius)
         {
             combatactionui.AllCombatClear();
+           
             combatactionui.IceStrikeAttackAction.SetActive(true);
         }
         else
