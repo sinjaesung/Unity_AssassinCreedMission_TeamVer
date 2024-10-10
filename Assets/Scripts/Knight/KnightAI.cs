@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class KnightAI : MonoBehaviour
 {
@@ -35,6 +36,13 @@ public class KnightAI : MonoBehaviour
     public Animator anim;
 
     public bool isDied = false;
+
+    public ParticleSystem hitEffect; // 피격시 재생할 파티클 효과
+    public AudioClip deathSound; // 사망시 재생할 소리
+    public AudioClip hitSound; // 피격시 재생할 소리
+    private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트
+
+    private NavMeshAgent pathFinder; // 경로계산 AI 에이전트
 
     private void Start()
     {
@@ -225,13 +233,37 @@ public class KnightAI : MonoBehaviour
         this.destination = destination;
         destinationReached = false;
     }
-
     public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+
+        if (currentHealth <= 0f)
+        {
+            if (!isDied)
+            {
+                Die();
+            }
+        }
+    }
+    public void TakeDamage(float amount,Vector3 hitPoint,Vector3 hitNormal)
     {
         currentHealth -= amount;
 
         //anim.SetTrigger("GetHit");
 
+        if (!isDied)
+        {
+            //죽지 않았을 때에만 피격 효과 발동 => 효과음,피가 튀는 이펙트 효과
+            enemyAudioPlayer.PlayOneShot(hitSound);
+
+            //이펙트의 위치 : 맞은 위치
+            //이펙트가 튀는 방향: 맞은 방향
+            hitEffect.transform.position = hitPoint;
+            //바라보는 방향을 일치시킨다.
+            hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
+            //위치 선정 완료 후 재생
+            hitEffect.Play();
+        }
         if(currentHealth <= 0f)
         {
             if (!isDied)
@@ -248,6 +280,14 @@ public class KnightAI : MonoBehaviour
         anim.SetBool("isDead", true);
         this.enabled = false;
         GetComponent<Collider>().enabled = false;
+
+        //AI 추격 중지
+        pathFinder.isStopped = true;
+        pathFinder.enabled = false;
+
+        //이펙트 실행
+        enemyAudioPlayer.PlayOneShot(deathSound);
+
         Destroy(gameObject, 6f);
     }
 }

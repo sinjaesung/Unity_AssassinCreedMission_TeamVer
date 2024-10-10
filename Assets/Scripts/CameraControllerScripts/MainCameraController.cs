@@ -20,6 +20,7 @@ public class MainCameraController : MonoBehaviour
     float invertXValue;
     float invertYValue;
 
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

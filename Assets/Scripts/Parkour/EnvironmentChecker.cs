@@ -18,6 +18,12 @@ public class EnvironmentChecker : MonoBehaviour
     [SerializeField] private LayerMask climbingLayer;
     public int numberOfRays = 12;
 
+    public ParkourActionUI parkouractionUi;
+    private void Awake()
+    {
+        parkouractionUi = FindObjectOfType<ParkourActionUI>();
+    }
+
     public ObstacleInfo CheckObstacle()
     {
         var hitData = new ObstacleInfo();
@@ -33,6 +39,9 @@ public class EnvironmentChecker : MonoBehaviour
             hitData.heightHitFound = Physics.Raycast(heightOrigin, Vector3.down, out hitData.heightInfo, heightRayLength,obstacleLayer);
 
             Debug.DrawRay(heightOrigin, Vector3.down * heightRayLength, (hitData.heightHitFound) ? Color.blue : Color.green);
+
+            //[튜토리얼조작] space키를 눌러라는 UI표현 
+            parkouractionUi.ParkourAction.SetActive(true);
         }
 
         return hitData;
@@ -89,6 +98,8 @@ public class EnvironmentChecker : MonoBehaviour
             {
                 Debug.Log("CheckClimbing 가능 발견>>" + hit.transform.name);
                 climbInfo = hit;
+                //[튜토리얼조작] 스페이스 눌러서 클라이밍가능하다 표현
+                parkouractionUi.ClimbIdleAction.SetActive(true);
                 return true;
             }
         }
@@ -106,6 +117,8 @@ public class EnvironmentChecker : MonoBehaviour
         {
             Debug.Log("CheckDropClimbPoint 가능 발견>>" + hit.transform.name);
             DropHit = hit;
+            //[튜토리얼조작] 키 눌러서 내려갈수있다 표현
+            parkouractionUi.DrophangAction.SetActive(true);
             return true;
         }
 

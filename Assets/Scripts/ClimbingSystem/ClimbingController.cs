@@ -7,20 +7,30 @@ public class ClimbingController : MonoBehaviour
     public EnvironmentChecker ec;
     public PlayerScript playerScript;
 
-    ClimbingPoint currentClimbPoint;
+    public ClimbingPoint currentClimbPoint;
 
     public float InOutValue;
     public float UpDownValue;
     public float LeftRightValue;
 
+    public ParkourActionUI parkouractionUi;
+
     private void Awake()
     {
         ec = GetComponent<EnvironmentChecker>();
+        parkouractionUi = FindObjectOfType<ParkourActionUI>();
     }
     private void Update()
     {
         if (!playerScript.playerHanging)
         {
+            if (!playerScript.playerInAction)
+            {
+                if (ec.CheckClimbing(transform.forward, out RaycastHit climbInfo))
+                {
+                    //UI표시용 클라이밍 준비 JUMP누르기전에도 보여줘야함
+                }
+            }
             if (Input.GetButton("Jump") && !playerScript.playerInAction)
             {
                 if (ec.CheckClimbing(transform.forward, out RaycastHit climbInfo))
@@ -39,6 +49,13 @@ public class ClimbingController : MonoBehaviour
                 }
             }
 
+            if (!playerScript.playerInAction)
+            {
+                if (ec.CheckDropClimbPoint(out RaycastHit DropHit))
+                {
+                    //UI표시용 클라임 DropHang Leave누르기전에도 보여줘야함
+                }
+            }
             if (Input.GetButton("Leave") && !playerScript.playerInAction)
             {
                 if (ec.CheckDropClimbPoint(out RaycastHit DropHit))
@@ -58,6 +75,13 @@ public class ClimbingController : MonoBehaviour
         }
         else
         {
+            parkouractionUi.BasicActionClear();
+            parkouractionUi.SubActionClear();
+            //[튜토리얼조작] Leave키를 눌러서 벽에서 벗어날수있다는 UI
+            parkouractionUi.JumpwallAction.SetActive(true);
+            //[튜토리얼조작] space키와 상하좌우 조합을 눌러라는 UI
+            parkouractionUi.ClimbJumpAction.SetActive(true);
+
             //leave climb point
             if (Input.GetButton("Leave") && !playerScript.playerInAction)
             {
@@ -83,15 +107,18 @@ public class ClimbingController : MonoBehaviour
 
             var neighbour = currentClimbPoint != null ? currentClimbPoint.GetNeighbour(inputDirection) : null;
             if (neighbour == null) return;
-
+    
             if (neighbour.connectionType == ConnectionType.Jump && Input.GetButton("Jump"))
             {
                 currentClimbPoint = neighbour.climbingPoint;
-
+               
+                Debug.Log("ClimbJump action>>");
+               
                 if (currentClimbPoint != null)
                 {
                     if (neighbour.pointDirection.y == 1)
                     {
+                        Debug.Log("ClimbJump ClimbUp>>");
                         InOutValue = 0.1f;
                         UpDownValue = 0.05f;
                         LeftRightValue = 0.25f;
@@ -99,6 +126,7 @@ public class ClimbingController : MonoBehaviour
                     }
                     else if (neighbour.pointDirection.y == -1)
                     {
+                        Debug.Log("ClimbJump ClimbDown>>");
                         InOutValue = 0.2f;
                         UpDownValue = 0.05f;
                         LeftRightValue = 0.25f;
@@ -106,10 +134,12 @@ public class ClimbingController : MonoBehaviour
                     }
                     else if (neighbour.pointDirection.x == 1)
                     {
+                        Debug.Log("ClimbJump ClimbRight>>");
                         StartCoroutine(ClimbToLedge("ClimbRight", currentClimbPoint.transform, 0.20f, 0.51f));
                     }
                     else if (neighbour.pointDirection.x == -1)
                     {
+                        Debug.Log("ClimbJump ClimbLeft>>");
                         InOutValue = 0.1f;
                         UpDownValue = 0.04f;
                         LeftRightValue = 0.25f;
@@ -122,10 +152,13 @@ public class ClimbingController : MonoBehaviour
             {
                 currentClimbPoint = neighbour.climbingPoint;
 
+                Debug.Log("ClimbMove action>>");
+
                 if (currentClimbPoint != null)
                 {
                     if (neighbour.pointDirection.x == 1)
                     {
+                        Debug.Log("ClimbMove ShimmyRight>>");
                         InOutValue = 0.2f;
                         UpDownValue = 0.03f;
                         LeftRightValue = 0.25f;
@@ -134,6 +167,7 @@ public class ClimbingController : MonoBehaviour
                     }
                     else if (neighbour.pointDirection.x == -1)
                     {
+                        Debug.Log("ClimbMove ShimmyLeft>>");
                         InOutValue = 0.2f;
                         UpDownValue = 0.03f;
                         LeftRightValue = 0.25f;

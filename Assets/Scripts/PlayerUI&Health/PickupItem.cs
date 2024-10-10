@@ -13,8 +13,11 @@ public class PickupItem : MonoBehaviour
     public Transform player;
     public Inventory inventory;
     public GameManager GM;
+    public Player playerdata;
 
     public GameObject RelWeapon;
+
+    public Missions missions;
 
     private void Start()
     {
@@ -27,15 +30,16 @@ public class PickupItem : MonoBehaviour
         player = player_;
         inventory = inventory_;
     }
-
+ 
     private void Update()
     {
         if(player != null)
         {
             if (Vector3.Distance(transform.position, player.transform.position) < itemRadius)
             {
-                if (Input.GetKeyDown("f"))
+               /* if (Input.GetKeyDown("f"))
                 {
+
                     if (ItemTag == "Sword")
                     {
                         Debug.Log(ItemTag + "Pickup");
@@ -78,7 +82,7 @@ public class PickupItem : MonoBehaviour
                     }
 
                     ItemToPick.SetActive(false);
-                }
+                }*/
             }
         }
        

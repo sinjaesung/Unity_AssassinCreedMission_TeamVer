@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     public GameObject playerUI;
     public GameObject MMCam;
     public GameObject MMCanvas;
-    public GameObject crossHairCanvas;
     public GameObject weaponstopick;
     public GameObject weaponsmenu;
 
@@ -52,8 +51,7 @@ public class GameManager : MonoBehaviour
             playerUI.SetActive(false);
             MMCam.SetActive(false);
             MMCanvas.SetActive(false);
-            crossHairCanvas.SetActive(false);
-            weaponstopick.SetActive(false);
+           // weaponstopick.SetActive(false);
             weaponsmenu.SetActive(false);
 
             cutScene1.SetActive(true);
@@ -67,8 +65,7 @@ public class GameManager : MonoBehaviour
                 playerUI.SetActive(true);
                 MMCam.SetActive(true);
                 MMCanvas.SetActive(true);
-                crossHairCanvas.SetActive(true);
-                weaponstopick.SetActive(true);
+                //weaponstopick.SetActive(true);
                 weaponsmenu.SetActive(true);
 
                 cutScene1.SetActive(false);
@@ -82,8 +79,7 @@ public class GameManager : MonoBehaviour
             playerUI.SetActive(false);
             MMCam.SetActive(false);
             MMCanvas.SetActive(false);
-            crossHairCanvas.SetActive(false);
-            weaponstopick.SetActive(false);
+            //weaponstopick.SetActive(false);
             weaponsmenu.SetActive(false);
 
             cutScene1.SetActive(true);
@@ -98,8 +94,7 @@ public class GameManager : MonoBehaviour
                 playerUI.SetActive(true);
                 MMCam.SetActive(true);
                 MMCanvas.SetActive(true);
-                crossHairCanvas.SetActive(true);
-                weaponstopick.SetActive(true);
+                //weaponstopick.SetActive(true);
                 weaponsmenu.SetActive(true);
 
                 cutScene1.SetActive(false);
@@ -108,7 +103,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (rifle != null)
+      /*  if (rifle != null)
         {
             //show Ammo & Mag for rifle and bazooka
             RifleAmmoText.text = "" + rifle.presentAmmunition;
@@ -119,15 +114,15 @@ public class GameManager : MonoBehaviour
         {
             BazookaAmmoText.text = "" + bazooka.presentAmmunition;
             BazookaMagText.text = "" + bazooka.mag;
-        }
+        }*/
 
         //show stock for grenade health and energy
-        GrenadeStock1.text = "" + numberofGrenades;
-        GrenadeStock2.text = "" + numberofGrenades;
-        HealthStock.text = "" + numberofHealth;
-        EnergyStock.text = "" + numberofEnergy;
+       // GrenadeStock1.text = "" + numberofGrenades;
+       // GrenadeStock2.text = "" + numberofGrenades;
+       // HealthStock.text = "" + numberofHealth;
+       // EnergyStock.text = "" + numberofEnergy;
 
-        if(numberofHealth > 0)
+      /*  if(numberofHealth > 0)
         {
             healthSlot.SetActive(true);
         }
@@ -146,6 +141,6 @@ public class GameManager : MonoBehaviour
         else if (numberofEnergy <= 0)
         {
             energySlot.SetActive(false);
-        }
+        }*/
     }
 }

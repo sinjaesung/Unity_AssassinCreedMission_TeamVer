@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class SingleMeleeAttack : MonoBehaviour
@@ -14,8 +15,31 @@ public class SingleMeleeAttack : MonoBehaviour
     public float attackRadius;
     public LayerMask knightLayer;
 
+    public AudioSource SwordAudioPlayer; //  소리 재생기
+    [SerializeField] public AudioClip SwordClip; // 소리(var)
+    [SerializeField] public AudioClip SwordClip2; // 소리(var)
+
+    public CombatActionUI combatactionui;
+
+    public LayerMask enemyLayer;
+    public float attackRange;
+    public bool enemyInvisionRadius;
+
     private void Update()
     {
+        enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
+
+        if (enemyInvisionRadius)
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.SwordAttackAction.SetActive(true);
+        }
+        else
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.SwordAttackAction.SetActive(false);
+        }
+
         if (!Input.GetMouseButtonDown(0))
         {
             Timer += Time.deltaTime;
@@ -29,7 +53,7 @@ public class SingleMeleeAttack : MonoBehaviour
 
         if (Timer > 5f)
         {
-            Debug.Log("FistSingleMeleeAttack Mode Off, 마우스를 뗀 이후로 5초이상지난 시점에 대전모드Off");
+            Debug.Log("SingleMeleeAttack Mode Off, 마우스를 뗀 이후로 5초이상지난 시점에 대전모드Off");
             anim.SetBool("SingleHandAttackActive", false);
         }
 
@@ -85,19 +109,35 @@ public class SingleMeleeAttack : MonoBehaviour
 
         foreach (Collider knight in hitKnight)
         {
-            Debug.Log("SingleMeleeAttack [[Hitinfo]]:" + knight.transform.name);
+            Debug.Log("SingleMeleeAttack [[MeleeHitinfo]]:" + knight.transform.name);
 
             KnightAI knightAI = knight.GetComponent<KnightAI>();
             KnightAI2 knightAI2 = knight.GetComponent<KnightAI2>();
+            PoliceMan policeman = knight.GetComponent<PoliceMan>();
+            CharacterNavigatorScript character = knight.GetComponent<CharacterNavigatorScript>();
+            Boss boss = knight.GetComponent<Boss>();
 
             if (knightAI != null)
             {
-                knightAI.TakeDamage(giveDamage);
+                knightAI.TakeDamage(giveDamage,knight.ClosestPoint(attackArea.position),(knight.transform.position - attackArea.position));
             }
-            if (knightAI2 != null)
+           /* if (knightAI2 != null)
             {
-                knightAI2.TakeDamage(giveDamage);
+                knightAI2.TakeDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+            }*/
+            if (character != null)
+            {
+                character.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
             }
+            if (policeman != null)
+            {
+                policeman.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+            }
+            if (boss != null)
+            {
+                boss.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+            }
+            SwordAudioPlayer.PlayOneShot(SwordClip);
         }
     }
 
@@ -156,11 +196,13 @@ public class SingleMeleeAttack : MonoBehaviour
     IEnumerator SingleAttack5()
     {
         anim.SetBool("SingleAttack5", true);
+        SwordAudioPlayer.PlayOneShot(SwordClip2);
         playerScript.movementSpeed = 0f;
         anim.SetFloat("movementValue", 0f);
         yield return new WaitForSeconds(0.2f);
         anim.SetBool("SingleAttack5", false);
         playerScript.movementSpeed = 5f;
         anim.SetFloat("movementValue", 0f);
+        SwordAudioPlayer.PlayOneShot(SwordClip2);
     }
 }
