@@ -14,6 +14,12 @@ public class PlayerShooter : MonoBehaviour
 
     public float Timer = 0f;//모드 전환 관련
 
+    public CombatActionUI combatactionui;
+
+    public LayerMask enemyLayer;
+    public float attackRange;
+    public bool enemyInvisionRadius;
+
     private void Start()
     {
         //playerinput,playeranimator 참조 받아오기
@@ -35,6 +41,19 @@ public class PlayerShooter : MonoBehaviour
 
     private void Update()
     {
+        enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
+
+        if (enemyInvisionRadius)
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.RifleAttackAction.SetActive(true);
+        }
+        else
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.RifleAttackAction.SetActive(false);
+        }
+
         //권총,샷건(라이플 공통모드)
         if (playerAnimator.GetFloat("movementValue") > 0.001f)
         {

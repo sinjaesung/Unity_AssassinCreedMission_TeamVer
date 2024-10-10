@@ -6,15 +6,15 @@ public class ClimbingController : MonoBehaviour
 {
     public EnvironmentChecker ec;
     public PlayerScript playerScript;
-    //테스트
 
-    ClimbingPoint currentClimbPoint;
+    public ClimbingPoint currentClimbPoint;
 
     public float InOutValue;
     public float UpDownValue;
     public float LeftRightValue;
 
     public ParkourActionUI parkouractionUi;
+
     private void Awake()
     {
         ec = GetComponent<EnvironmentChecker>();
@@ -24,6 +24,13 @@ public class ClimbingController : MonoBehaviour
     {
         if (!playerScript.playerHanging)
         {
+            if (!playerScript.playerInAction)
+            {
+                if (ec.CheckClimbing(transform.forward, out RaycastHit climbInfo))
+                {
+                    //UI표시용 클라이밍 준비 JUMP누르기전에도 보여줘야함
+                }
+            }
             if (Input.GetButton("Jump") && !playerScript.playerInAction)
             {
                 if (ec.CheckClimbing(transform.forward, out RaycastHit climbInfo))
@@ -42,6 +49,13 @@ public class ClimbingController : MonoBehaviour
                 }
             }
 
+            if (!playerScript.playerInAction)
+            {
+                if (ec.CheckDropClimbPoint(out RaycastHit DropHit))
+                {
+                    //UI표시용 클라임 DropHang Leave누르기전에도 보여줘야함
+                }
+            }
             if (Input.GetButton("Leave") && !playerScript.playerInAction)
             {
                 if (ec.CheckDropClimbPoint(out RaycastHit DropHit))
@@ -61,8 +75,13 @@ public class ClimbingController : MonoBehaviour
         }
         else
         {
-            //[튜토리얼조작] 어딘가에 매달려있을때에 한해서 점프월가능하다 표현필요
+            parkouractionUi.BasicActionClear();
+            parkouractionUi.SubActionClear();
+            //[튜토리얼조작] Leave키를 눌러서 벽에서 벗어날수있다는 UI
             parkouractionUi.JumpwallAction.SetActive(true);
+            //[튜토리얼조작] space키와 상하좌우 조합을 눌러라는 UI
+            parkouractionUi.ClimbJumpAction.SetActive(true);
+
             //leave climb point
             if (Input.GetButton("Leave") && !playerScript.playerInAction)
             {
@@ -88,56 +107,58 @@ public class ClimbingController : MonoBehaviour
 
             var neighbour = currentClimbPoint != null ? currentClimbPoint.GetNeighbour(inputDirection) : null;
             if (neighbour == null) return;
-
-            if (neighbour.connectionType == ConnectionType.Jump)
+    
+            if (neighbour.connectionType == ConnectionType.Jump && Input.GetButton("Jump"))
             {
-                //[튜토리얼조작] 상하좌우+space키로 이동가능하다는 표현
-                parkouractionUi.ClimbJumpAction.SetActive(true);
                 currentClimbPoint = neighbour.climbingPoint;
-
-                if (Input.GetButton("Jump"))
+               
+                Debug.Log("ClimbJump action>>");
+               
+                if (currentClimbPoint != null)
                 {
-                    if (currentClimbPoint != null)
+                    if (neighbour.pointDirection.y == 1)
                     {
-                        if (neighbour.pointDirection.y == 1)
-                        {
-                            InOutValue = 0.1f;
-                            UpDownValue = 0.05f;
-                            LeftRightValue = 0.25f;
-                            StartCoroutine(ClimbToLedge("ClimbUp", currentClimbPoint.transform, 0.34f, 0.64f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
-                        }
-                        else if (neighbour.pointDirection.y == -1)
-                        {
-                            InOutValue = 0.2f;
-                            UpDownValue = 0.05f;
-                            LeftRightValue = 0.25f;
-                            StartCoroutine(ClimbToLedge("ClimbDown", currentClimbPoint.transform, 0.31f, 0.68f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
-                        }
-                        else if (neighbour.pointDirection.x == 1)
-                        {
-                            StartCoroutine(ClimbToLedge("ClimbRight", currentClimbPoint.transform, 0.20f, 0.51f));
-                        }
-                        else if (neighbour.pointDirection.x == -1)
-                        {
-                            InOutValue = 0.1f;
-                            UpDownValue = 0.04f;
-                            LeftRightValue = 0.25f;
+                        Debug.Log("ClimbJump ClimbUp>>");
+                        InOutValue = 0.1f;
+                        UpDownValue = 0.05f;
+                        LeftRightValue = 0.25f;
+                        StartCoroutine(ClimbToLedge("ClimbUp", currentClimbPoint.transform, 0.34f, 0.64f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
+                    }
+                    else if (neighbour.pointDirection.y == -1)
+                    {
+                        Debug.Log("ClimbJump ClimbDown>>");
+                        InOutValue = 0.2f;
+                        UpDownValue = 0.05f;
+                        LeftRightValue = 0.25f;
+                        StartCoroutine(ClimbToLedge("ClimbDown", currentClimbPoint.transform, 0.31f, 0.68f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
+                    }
+                    else if (neighbour.pointDirection.x == 1)
+                    {
+                        Debug.Log("ClimbJump ClimbRight>>");
+                        StartCoroutine(ClimbToLedge("ClimbRight", currentClimbPoint.transform, 0.20f, 0.51f));
+                    }
+                    else if (neighbour.pointDirection.x == -1)
+                    {
+                        Debug.Log("ClimbJump ClimbLeft>>");
+                        InOutValue = 0.1f;
+                        UpDownValue = 0.04f;
+                        LeftRightValue = 0.25f;
 
-                            StartCoroutine(ClimbToLedge("ClimbLeft", currentClimbPoint.transform, 0.20f, 0.51f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
-                        }
+                        StartCoroutine(ClimbToLedge("ClimbLeft", currentClimbPoint.transform, 0.20f, 0.51f, playerHandOffset: new Vector3(InOutValue, UpDownValue, LeftRightValue)));
                     }
                 }
             }
             else if (neighbour.connectionType == ConnectionType.Move)
             {
-                //[튜토리얼조작] 매달려있고,Move connectionType인 경우에 한해서 좌우 이미지ui만 나오도록
-                parkouractionUi.ClimbMoveAction.SetActive(true);
                 currentClimbPoint = neighbour.climbingPoint;
+
+                Debug.Log("ClimbMove action>>");
 
                 if (currentClimbPoint != null)
                 {
                     if (neighbour.pointDirection.x == 1)
                     {
+                        Debug.Log("ClimbMove ShimmyRight>>");
                         InOutValue = 0.2f;
                         UpDownValue = 0.03f;
                         LeftRightValue = 0.25f;
@@ -146,6 +167,7 @@ public class ClimbingController : MonoBehaviour
                     }
                     else if (neighbour.pointDirection.x == -1)
                     {
+                        Debug.Log("ClimbMove ShimmyLeft>>");
                         InOutValue = 0.2f;
                         UpDownValue = 0.03f;
                         LeftRightValue = 0.25f;

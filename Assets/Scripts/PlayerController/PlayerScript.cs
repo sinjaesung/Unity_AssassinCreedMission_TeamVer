@@ -72,7 +72,6 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        parkouractionUi.BasicActionClear();
         parkouractionUi.SubActionClear();
 
         if (presentEnergy <= 0)
@@ -113,6 +112,9 @@ public class PlayerScript : MonoBehaviour
             fallingSpeed = -0.5f;
             velocity = moveDir * movementSpeed;
 
+            parkouractionUi.BasicActionClear();
+            parkouractionUi.JumpDownAction.SetActive(false);
+
             playerOnLedge = environmentChecker.CheckLedge(moveDir,out LedgeInfo ledgeInfo);
             if (playerOnLedge)
             {
@@ -122,12 +124,15 @@ public class PlayerScript : MonoBehaviour
                 //[튜토리얼조작] 플레이어가 릿지위에있는경우에 JumpDown(스페이스) 하라고 표시
                 parkouractionUi.JumpDownAction.SetActive(true);
             }
-
+            
             Debug.Log("Ledge에 있었을땐 velocity.magnitude:" + velocity.magnitude);
             animator.SetFloat("movementValue", velocity.magnitude / movementSpeed, 0.2f, Time.deltaTime);
         }
         else
         {
+            parkouractionUi.BasicActionClear();
+            parkouractionUi.JumpDownAction.SetActive(false);
+
             fallingSpeed += Physics.gravity.y * Time.deltaTime;
 
             velocity = transform.forward * movementSpeed / 2;

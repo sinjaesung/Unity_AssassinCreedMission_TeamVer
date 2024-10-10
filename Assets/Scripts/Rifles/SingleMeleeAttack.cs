@@ -18,8 +18,28 @@ public class SingleMeleeAttack : MonoBehaviour
     public AudioSource SwordAudioPlayer; //  소리 재생기
     [SerializeField] public AudioClip SwordClip; // 소리(var)
     [SerializeField] public AudioClip SwordClip2; // 소리(var)
+
+    public CombatActionUI combatactionui;
+
+    public LayerMask enemyLayer;
+    public float attackRange;
+    public bool enemyInvisionRadius;
+
     private void Update()
     {
+        enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
+
+        if (enemyInvisionRadius)
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.SwordAttackAction.SetActive(true);
+        }
+        else
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.SwordAttackAction.SetActive(false);
+        }
+
         if (!Input.GetMouseButtonDown(0))
         {
             Timer += Time.deltaTime;
@@ -33,7 +53,7 @@ public class SingleMeleeAttack : MonoBehaviour
 
         if (Timer > 5f)
         {
-            Debug.Log("FistSingleMeleeAttack Mode Off, 마우스를 뗀 이후로 5초이상지난 시점에 대전모드Off");
+            Debug.Log("SingleMeleeAttack Mode Off, 마우스를 뗀 이후로 5초이상지난 시점에 대전모드Off");
             anim.SetBool("SingleHandAttackActive", false);
         }
 

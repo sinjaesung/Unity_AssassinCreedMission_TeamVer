@@ -36,6 +36,7 @@ public class PlayerShooter2 : MonoBehaviour
 
     private void Update()
     {
+        
         //권총,샷건(라이플 공통모드)
         if (playerAnimator.GetFloat("movementValue") > 0.001f)
         {

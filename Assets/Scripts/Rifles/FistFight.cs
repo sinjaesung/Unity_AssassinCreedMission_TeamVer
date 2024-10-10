@@ -27,8 +27,27 @@ public class FistFight : MonoBehaviour
     [SerializeField] GameObject HitEffect3_handkick;
     [SerializeField] GameObject HitEffect4_kickcombo;
     [SerializeField] GameObject HitEffect5_leftkick;
+
+    public CombatActionUI combatactionui;
+
+    public LayerMask enemyLayer;
+    public float attackRange;
+    public bool enemyInvisionRadius;
     private void Update()
     {
+        enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
+
+        if (enemyInvisionRadius)
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.FistAttackAction.SetActive(true);
+        }
+        else
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.FistAttackAction.SetActive(false);
+        }
+
         if (!Input.GetMouseButtonDown(0))
         {
             Timer += Time.deltaTime;
@@ -52,6 +71,8 @@ public class FistFight : MonoBehaviour
         }
 
         FistFightModes();
+
+        
     }
 
     void FistFightModes()

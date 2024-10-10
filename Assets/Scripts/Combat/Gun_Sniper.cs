@@ -19,6 +19,8 @@ public class Gun_Sniper : Gun
 
     public float normalFOV;
 
+    public CombatActionUI combatactionui;
+
     private void Start()
     {
         normalFOV = maincamera.fieldOfView;
@@ -29,10 +31,14 @@ public class Gun_Sniper : Gun
         if (Input.GetMouseButton(1))
         {
             isSniping = true;
+            combatactionui.AllCombatClear();
+            combatactionui.SnipermodeAction.SetActive(false);
         }
         else
         {
-            isSniping = false;    
+            isSniping = false;
+            combatactionui.AllCombatClear();
+            combatactionui.SnipermodeAction.SetActive(true);
         }
 
         // Smoothly transition between normal FOV and sniping FOV

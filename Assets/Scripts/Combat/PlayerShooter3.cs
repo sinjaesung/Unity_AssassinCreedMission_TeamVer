@@ -13,6 +13,12 @@ public class PlayerShooter3 : MonoBehaviour
     public float Timer = 0f;
     public bool isMoving;
 
+    public CombatActionUI combatactionui;
+
+    public LayerMask enemyLayer;
+    public float attackRange;
+    public bool enemyInvisionRadius;
+
     private void Start()
     {
         //playerinput,playeranimator 참조 받아오기
@@ -34,6 +40,19 @@ public class PlayerShooter3 : MonoBehaviour
 
     private void Update()
     {
+        enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
+
+        if (enemyInvisionRadius)
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.BazookaAttackAction.SetActive(true);
+        }
+        else
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.BazookaAttackAction.SetActive(false);
+        }
+
         if (playerAnimator.GetFloat("movementValue") > 0.001f)
         {
             isMoving = true;

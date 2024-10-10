@@ -12,6 +12,12 @@ public class WandShooter2 : MonoBehaviour
     public bool isMoving;
     public float Timer = 0f;
 
+    public CombatActionUI combatactionui;
+
+    public LayerMask enemyLayer;
+    public float attackRange;
+    public bool enemyInvisionRadius;
+
     private void Start()
     {
         //playerinput,playeranimator 참조 받아오기
@@ -33,6 +39,19 @@ public class WandShooter2 : MonoBehaviour
 
     private void Update()
     {
+        enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
+
+        if (enemyInvisionRadius)
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.FireStrikeAttackAction.SetActive(true);
+        }
+        else
+        {
+            combatactionui.AllCombatClear();
+            combatactionui.FireStrikeAttackAction.SetActive(false);
+        }
+
         if (playerAnimator.GetFloat("movementValue") > 0.001f)
         {
             isMoving = true;
