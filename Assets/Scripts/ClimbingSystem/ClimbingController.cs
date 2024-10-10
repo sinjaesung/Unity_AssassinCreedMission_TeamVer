@@ -14,9 +14,11 @@ public class ClimbingController : MonoBehaviour
     public float UpDownValue;
     public float LeftRightValue;
 
+    public ParkourActionUI parkouractionUi;
     private void Awake()
     {
         ec = GetComponent<EnvironmentChecker>();
+        parkouractionUi = FindObjectOfType<ParkourActionUI>();
     }
     private void Update()
     {
@@ -60,6 +62,7 @@ public class ClimbingController : MonoBehaviour
         else
         {
             //[튜토리얼조작] 어딘가에 매달려있을때에 한해서 점프월가능하다 표현필요
+            parkouractionUi.JumpwallAction.SetActive(true);
             //leave climb point
             if (Input.GetButton("Leave") && !playerScript.playerInAction)
             {
@@ -89,6 +92,7 @@ public class ClimbingController : MonoBehaviour
             if (neighbour.connectionType == ConnectionType.Jump)
             {
                 //[튜토리얼조작] 상하좌우+space키로 이동가능하다는 표현
+                parkouractionUi.ClimbJumpAction.SetActive(true);
                 currentClimbPoint = neighbour.climbingPoint;
 
                 if (Input.GetButton("Jump"))
@@ -127,6 +131,7 @@ public class ClimbingController : MonoBehaviour
             else if (neighbour.connectionType == ConnectionType.Move)
             {
                 //[튜토리얼조작] 매달려있고,Move connectionType인 경우에 한해서 좌우 이미지ui만 나오도록
+                parkouractionUi.ClimbMoveAction.SetActive(true);
                 currentClimbPoint = neighbour.climbingPoint;
 
                 if (currentClimbPoint != null)

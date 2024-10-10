@@ -44,8 +44,13 @@ public class PlayerScript : MonoBehaviour
     public Inventory inventory;
 
     public GameObject GameOverObj;
+
+    public ParkourActionUI parkouractionUi;
+    public Animator MoveArrowAnim;
     private void Awake()
     {
+        parkouractionUi = FindObjectOfType<ParkourActionUI>();
+
         Debug.Log("프리팹 캐릭터 스폰"+transform.name);
         healthbar = FindObjectOfType<HealthBar>();
         energybar = FindObjectOfType<EnergyBar>();
@@ -67,7 +72,10 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        if(presentEnergy <= 0)
+        parkouractionUi.BasicActionClear();
+        parkouractionUi.SubActionClear();
+
+        if (presentEnergy <= 0)
         {
             movementSpeed = 2f;
 
@@ -112,6 +120,7 @@ public class PlayerScript : MonoBehaviour
                 PlayerLedgeMovement();
                 Debug.Log("player on ledge");
                 //[튜토리얼조작] 플레이어가 릿지위에있는경우에 JumpDown(스페이스) 하라고 표시
+                parkouractionUi.JumpDownAction.SetActive(true);
             }
 
             Debug.Log("Ledge에 있었을땐 velocity.magnitude:" + velocity.magnitude);
@@ -133,7 +142,8 @@ public class PlayerScript : MonoBehaviour
     }
     void PlayerMovement()
     {
-        //[튜토리얼조작] 플레이어가 움직이지 않을때에는 상하좌우 아이콘 숨김
+        //[튜토리얼조작] 플레이어가 움직이지 않을때에는 상하좌우 아이콘 기본 애니메이션
+        MoveArrowAnim.SetBool("IsMove", false);
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
@@ -150,6 +160,7 @@ public class PlayerScript : MonoBehaviour
             requireRotation = Quaternion.LookRotation(moveDir);
 
             //[튜토리얼조작] 플레이어가 움직이고있을때만 상하좌우움직이고있다 아이콘표시
+            MoveArrowAnim.SetBool("IsMove", true);
         }
 
         moveDir = requiredMoveDir;
