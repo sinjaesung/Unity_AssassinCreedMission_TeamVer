@@ -49,6 +49,9 @@ public class PlayerScript : MonoBehaviour
 
     public ParkourActionUI parkouractionUi;
     public Animator MoveArrowAnim;
+
+    public int JumpUpAnimExeCnt = 0;
+
     private void Awake()
     {
         parkouractionUi = FindObjectOfType<ParkourActionUI>();
@@ -75,14 +78,13 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            animator.SetBool("NormalJump", true);
+            animator.SetTrigger("JumpUp");
             fallingSpeed = JumpPower * 6 * Time.deltaTime;
             Debug.Log("PlayerScript Jump시에 fallingSpeed>>"+fallingSpeed);
         }
     }
     private void Update()
     {
-        animator.SetBool("NormalJump", false);
         parkouractionUi.SubActionClear();
 
         if (presentEnergy <= 0)
@@ -123,11 +125,23 @@ public class PlayerScript : MonoBehaviour
 
             fallingSpeed = -0.5f;
             velocity = moveDir * movementSpeed;
-            if (Input.GetKeyDown(KeyCode.Q))
+          
+            if (Input.GetKey(KeyCode.Q))
             {
-                animator.SetBool("NormalJump", true);
+                if (JumpUpAnimExeCnt < 1)
+                {
+                    Debug.Log("JumpUpAnim은 오직 한번만 실행>>");
+                    animator.ResetTrigger("JumpUp");
+                    animator.SetTrigger("JumpUp");
+                }
                 fallingSpeed = JumpPower * 2;
                 Debug.Log("PlayerScript Jump시에 fallingSpeed>>" + fallingSpeed);
+                JumpUpAnimExeCnt++;
+            }else if (!Input.GetKey(KeyCode.Q))
+            {
+                Debug.Log("JumpUpAnim 키를 안누르고 있을때>>");
+
+                JumpUpAnimExeCnt = 0;
             }
 
             parkouractionUi.BasicActionClear();
