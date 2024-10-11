@@ -112,7 +112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8835566090009111197
 Transform:
   m_ObjectHideFlags: 0
@@ -2604,7 +2604,7 @@ MonoBehaviour:
     m_Bits: 4096
   SwordAudioPlayer: {fileID: 8631210311504553317}
   SwordClip: {fileID: 8300000, guid: fdc5687a8e453e64fbb489cc1e8a2e0c, type: 3}
-  SwordClip2: {fileID: 8300000, guid: 6afc30b45d261ed47b1cc04983caa4f4, type: 3}
+  SwordClip2: {fileID: 8300000, guid: fdc5687a8e453e64fbb489cc1e8a2e0c, type: 3}
   combatactionui: {fileID: 8048047456786145536}
   enemyLayer:
     serializedVersion: 2
@@ -2634,7 +2634,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   SwordAudioPlayer: {fileID: 4535629133814564957}
-  SwordClip: {fileID: 8300000, guid: fdc5687a8e453e64fbb489cc1e8a2e0c, type: 3}
+  SwordClip: {fileID: 8300000, guid: 6afc30b45d261ed47b1cc04983caa4f4, type: 3}
   SwordClip2: {fileID: 8300000, guid: 6afc30b45d261ed47b1cc04983caa4f4, type: 3}
   combatactionui: {fileID: 8048047456786145536}
   enemyLayer:
@@ -3312,7 +3312,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5211211651595632293
 Transform:
   m_ObjectHideFlags: 0
