@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -154,7 +154,7 @@ public class Gun : MonoBehaviour
             CharacterNavigatorScript character = hit.transform.GetComponent<CharacterNavigatorScript>();
             Boss boss = hit.transform.GetComponent<Boss>();
 
-            /*if (target != null)
+            *//*if (target != null)
             {
                 //부딪힌 물체가 데미지를 입을 수 있는 대상일 때
                 //IDamagable을 갖고 있는 물체는 무조건 OnDamage 함수를 갖고 있다.
@@ -163,15 +163,15 @@ public class Gun : MonoBehaviour
                 //맞은 지점: 총알이 다은 지점
                 //맞은 회전값: 부딪힌 장소의 회전값 - hit.normal
                 target.OnDamage(damage, hit.point, hit.normal);
-            }*/
+            }*//*
             if (knightAI != null)
             {
                 knightAI.TakeDamage(damage, hit.point, hit.normal);
             }
-            /*if (knightAI2 != null)
+            *//*if (knightAI2 != null)
             {
                 knightAI2.TakeDamage(damage, hit.point, hit.normal);
-            }*/
+            }*//*
             if (character != null)
             {
                 character.characterHitDamage(damage, hit.point, hit.normal);
@@ -312,4 +312,4 @@ public class Gun : MonoBehaviour
        // UIManager.instance.UpdateAmmoText(magAmmo, ammoRemain);
         yield return null;
     }
-}
+}*/

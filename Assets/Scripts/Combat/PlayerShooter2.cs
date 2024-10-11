@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 // 주어진 Gun 오브젝트를 쏘거나 재장전
 // 알맞은 애니메이션을 재생하고 IK를 사용해 캐릭터 양손이 총에 위치하도록 조정
@@ -85,4 +85,4 @@ public class PlayerShooter2 : MonoBehaviour
             playerAnimator.SetBool("RifleActive", false);
         }
     }
-}
+}*/

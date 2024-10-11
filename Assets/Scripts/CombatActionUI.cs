@@ -6,12 +6,12 @@ public class CombatActionUI : MonoBehaviour
 {
     public GameObject FistAttackAction;
     public GameObject SwordAttackAction;
-    public GameObject RifleAttackAction;
+   /* public GameObject RifleAttackAction;
     public GameObject BazookaAttackAction;
     public GameObject IceStrikeAttackAction;
     public GameObject FireStrikeAttackAction;
     public GameObject SnipermodeAction;
-    public GameObject GunReloadAction;
+    public GameObject GunReloadAction;*/
 
     public void AllCombatClear()
     {

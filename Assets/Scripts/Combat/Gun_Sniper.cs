@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -116,10 +116,10 @@ public class Gun_Sniper : Gun
                 {
                     knightAI.TakeDamage(damage, hitInfo.point, hitInfo.normal);
                 }
-                /*if (knightAI2 != null)
+                *//*if (knightAI2 != null)
                 {
                     knightAI2.TakeDamage(damage, hit.point, hit.normal);
-                }*/
+                }*//*
                 if (character != null)
                 {
                     character.characterHitDamage(damage, hitInfo.point, hitInfo.normal);
@@ -182,4 +182,4 @@ public class Gun_Sniper : Gun
         // Destroy the particle system object after playback ends
         Destroy(particleObject);
     }
-}
+}*/

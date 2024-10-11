@@ -5,27 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public int numberofGrenades;
-    public int numberofHealth;
-    public int numberofEnergy;
 
-    [Header("Stocks")]
-    public Text GrenadeStock1;
-    public Text GrenadeStock2;
-    public Text HealthStock;
-    public Text EnergyStock;
-
-    [Header("Health&Energy")]
-    public GameObject healthSlot;
-    public GameObject energySlot;
-
-    [Header("Ammo & Mag")]
-    public Rifle rifle;
-    public Bazooka bazooka;
-    public Text RifleAmmoText;
-    public Text RifleMagText;
-    public Text BazookaAmmoText;
-    public Text BazookaMagText;
 
     [Header("Player Things")]
     public GameObject MC;
@@ -40,8 +20,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        rifle = FindObjectOfType<Rifle>();
-        bazooka = FindObjectOfType<Bazooka>();
 
         if ((MainMenu.instance!=null && MainMenu.instance.startGame == true))
         {
@@ -101,46 +79,5 @@ public class GameManager : MonoBehaviour
                 CharacterSelection.instance.gameObject.SetActive(false);
             }
         }
-
-
-      /*  if (rifle != null)
-        {
-            //show Ammo & Mag for rifle and bazooka
-            RifleAmmoText.text = "" + rifle.presentAmmunition;
-            RifleMagText.text = "" + rifle.mag;
-        }
-
-        if(bazooka != null)
-        {
-            BazookaAmmoText.text = "" + bazooka.presentAmmunition;
-            BazookaMagText.text = "" + bazooka.mag;
-        }*/
-
-        //show stock for grenade health and energy
-       // GrenadeStock1.text = "" + numberofGrenades;
-       // GrenadeStock2.text = "" + numberofGrenades;
-       // HealthStock.text = "" + numberofHealth;
-       // EnergyStock.text = "" + numberofEnergy;
-
-      /*  if(numberofHealth > 0)
-        {
-            healthSlot.SetActive(true);
-        }
-
-        else if(numberofHealth <= 0)
-        {
-            healthSlot.SetActive(false);
-        }
-
-
-        if (numberofEnergy > 0)
-        {
-            energySlot.SetActive(true);
-        }
-
-        else if (numberofEnergy <= 0)
-        {
-            energySlot.SetActive(false);
-        }*/
     }
 }

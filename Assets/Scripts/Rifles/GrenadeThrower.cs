@@ -17,12 +17,12 @@ public class GrenadeThrower : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && GM.numberofGrenades > 0)
+        /*if (Input.GetMouseButtonDown(0) && GM.numberofGrenades > 0)
         {
             //function
             StartCoroutine(GrenadeAnim());
             GM.numberofGrenades -= 1;
-        }
+        }*/
     }
 
     void ThrowGrenade()
