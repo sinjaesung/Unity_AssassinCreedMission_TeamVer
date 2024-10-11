@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
         FindObjectOfType<WantedLevel>().SetData(this);
         FindObjectOfType<MoneyUI>().SetData(this);
         pickupItems = FindObjectsOfType<PickupItem>();
-        saveglow = FindObjectOfType<SaveGlow>();
+        //saveglow = FindObjectOfType<SaveGlow>();
 
         minimap = FindObjectOfType<MiniMapScript>();
         minimap.player = transform;
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
             var item = pickupItems[e];
             item.SetPlayerData(this);
         }*/
-        saveglow.SetData(this);
+        //saveglow.SetData(this);
     }
     private void Update()
     {

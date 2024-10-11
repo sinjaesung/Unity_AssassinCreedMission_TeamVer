@@ -52,20 +52,20 @@ public class GameManager : MonoBehaviour
         else if((CharacterSelection.instance != null && CharacterSelection.instance.startGame == true))
         {
             //Debug.Log("CharacterSelection.instance.startGame>>" + CharacterSelection.instance.startGame);
-            MC.SetActive(false);
+            //MC.SetActive(false);
             //player.SetActive(false);
-            playerUI.SetActive(false);
-            MMCam.SetActive(false);
-            MMCanvas.SetActive(false);
+            //playerUI.SetActive(false);
+            //MMCam.SetActive(false);
+            //MMCanvas.SetActive(false);
             //weaponstopick.SetActive(false);
-            weaponsmenu.SetActive(false);
+            //weaponsmenu.SetActive(false);
 
-            cutScene1.SetActive(true);
+            //cutScene1.SetActive(true);
 
             //Debug.Log("CharacterSelection ÄÆ¾À ½ÃÀÛ°¡´É"+ CharacterSelection.instance.startGame);
             //Debug.Log("MainMenu ÄÆ¾À ½ÃÀÛ°¡´É"+ MainMenu.instance.startGame);
-            if (CutSceneEnder.instance.CutSceneEnd == true)
-            {
+            /*if (CutSceneEnder.instance.CutSceneEnd == true)
+            {*/
                 CharacterSelection.instance.startGame = false;
                 MC.SetActive(true);
                 //player.SetActive(true);
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
 
                 cutScene1.SetActive(false);
                 CharacterSelection.instance.gameObject.SetActive(false);
-            }
+            //}
         }
     }
 }

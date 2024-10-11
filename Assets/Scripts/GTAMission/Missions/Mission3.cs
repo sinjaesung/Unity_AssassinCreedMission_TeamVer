@@ -28,7 +28,7 @@ public class Mission3 : MonoBehaviour
                     Debug.Log(MatchTagString + ">해당 타입의 오브젝트 모두 제거시에만 미션 통과");
                     missions.Mission3 = true;
 
-                    Destroy(gameObject, 3f);
+                   // Destroy(gameObject, 3f);
                 }
             }
         }

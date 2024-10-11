@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/19ThTownPack/Scenes/Episode1.unity
     guid: 99c001fa6e7117c4e99672400b4a3312
+  - enabled: 1
+    path: Assets/19ThTownPack/Scenes/TestScene.unity
+    guid: 5dd4ef57b794d4645a5ba65a99549106
   m_configObjects: {}

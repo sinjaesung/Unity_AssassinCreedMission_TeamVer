@@ -40,9 +40,9 @@ public class SaveGlow : MonoBehaviour
                 {
                     Debug.Log(MatchTagString + ">해당 타입의 오브젝트 모두 제거시에만 미션 통과");
                     missions.Mission1 = true;
-                    player.playerMoney += 400;
+                   // player.playerMoney += 400;
 
-                    Destroy(gameObject, 3f);
+                   // Destroy(gameObject, 3f);
                 }
             }
         }
