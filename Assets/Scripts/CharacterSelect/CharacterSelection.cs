@@ -27,6 +27,31 @@ public class CharacterSelection : MonoBehaviour
     }
     #endregion
 
+    public void CursorActive()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void ChildCharacterHide()
+    {
+        for(int e=0; e < transform.childCount; e++)
+        {
+            var child_item = transform.GetChild(e);
+            child_item.gameObject.SetActive(false);
+        }
+    }
+    public void ChildCharacterVisible()
+    {
+        for (int e = 0; e < transform.childCount; e++)
+        {
+            var child_item = transform.GetChild(e);
+            child_item.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnEnable()
+    {
+        gameObject.SetActive(true);
+    }
     public void OnStartButton()
     {
         Debug.Log("Starting");

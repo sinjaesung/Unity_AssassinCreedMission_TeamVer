@@ -23,7 +23,8 @@ public class MainCameraController : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked; 
+        Cursor.visible = false;
     }
     public void SetCharacterTarget(Transform target_)
     {

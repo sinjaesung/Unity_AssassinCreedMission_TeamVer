@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-
     [Header("Player Things")]
     public GameObject MC;
     public GameObject playerUI;
@@ -18,10 +17,16 @@ public class GameManager : MonoBehaviour
     [Header("Timeline")]
     public GameObject cutScene1;
 
+    [Header("HelpMenu")]
+    public GameObject MenuCanvas;
+
     private void Update()
     {
-
-        if ((MainMenu.instance!=null && MainMenu.instance.startGame == true))
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            MenuCanvas.SetActive(true);
+        }
+       /* if ((MainMenu.instance!=null && MainMenu.instance.startGame == true))
         {
            // Debug.Log("MainMenu.instance.startGame>>" + MainMenu.instance.startGame);
             MC.SetActive(false);
@@ -48,8 +53,8 @@ public class GameManager : MonoBehaviour
 
                 cutScene1.SetActive(false);
             }
-        }
-        else if((CharacterSelection.instance != null && CharacterSelection.instance.startGame == true))
+        }*/
+        if((CharacterSelection.instance != null && CharacterSelection.instance.startGame == true))
         {
             //Debug.Log("CharacterSelection.instance.startGame>>" + CharacterSelection.instance.startGame);
             //MC.SetActive(false);
@@ -75,8 +80,8 @@ public class GameManager : MonoBehaviour
                 //weaponstopick.SetActive(true);
                 weaponsmenu.SetActive(true);
 
-                cutScene1.SetActive(false);
-                CharacterSelection.instance.gameObject.SetActive(false);
+                //cutScene1.SetActive(false);
+                CharacterSelection.instance.ChildCharacterHide();
             //}
         }
     }

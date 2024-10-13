@@ -16,7 +16,7 @@ public class AISpawner : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(Spawn());
+        //StartCoroutine(Spawn());
     }
     public void SpawnEnemies(int spawnCnt)
     {
@@ -34,9 +34,8 @@ public class AISpawner : MonoBehaviour
             Transform child = transform.GetChild(Random.Range(0, transform.childCount - 1));
             obj.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
 
-            Debug.Log("AISpawner 오브젝트 위치 설정>>" + SpawnPoint.position + new Vector3(0, 6f, 0));
             //obj.transform.position = SpawnPoint.position + new Vector3(0, 6f, 0);
-            obj.GetComponent<NavMeshAgent>().Warp(SpawnPoint.position + new Vector3(0, 6f, 0));
+            obj.GetComponent<NavMeshAgent>().Warp(child.position + new Vector3(0, 6f, 0));
 
             yield return null;
 
@@ -53,10 +52,10 @@ public class AISpawner : MonoBehaviour
             GameObject obj = Instantiate(AiPrefab[randomIndex]);
 
             Transform child = transform.GetChild(Random.Range(0, transform.childCount - 1));
-            obj.GetComponent<PoliceWaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
+            obj.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
 
             //obj.transform.position = child.position + new Vector3(0, 6f, 0);
-            obj.GetComponent<NavMeshAgent>().Warp(SpawnPoint.position + new Vector3(0, 6f, 0));
+            obj.GetComponent<NavMeshAgent>().Warp(child.position + new Vector3(0, 6f, 0));
 
             yield return null;
 

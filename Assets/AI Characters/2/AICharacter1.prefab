@@ -1577,6 +1577,7 @@ GameObject:
   - component: {fileID: 4876882423373677700}
   - component: {fileID: 7704519308960453816}
   - component: {fileID: 7635356452150283033}
+  - component: {fileID: 8830329734186586517}
   m_Layer: 12
   m_Name: AICharacter1
   m_TagString: TARGET_B
@@ -1847,6 +1848,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8830329734186586517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6101073041409124339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ae523cccb83fd4a8545ce37845d1cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTutorial: {fileID: 0}
+  isCompletedDelete: 0
 --- !u!1 &6195435487250465736
 GameObject:
   m_ObjectHideFlags: 0

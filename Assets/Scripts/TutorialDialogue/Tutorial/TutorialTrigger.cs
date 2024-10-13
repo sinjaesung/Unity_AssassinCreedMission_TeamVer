@@ -2,20 +2,51 @@ using UnityEngine;
 
 public class TutorialTrigger : TutorialBase
 {
-    [SerializeField]
-    private Transform triggerObject;
 
-    public bool isTrigger { set; get; } = false;
+   // public bool isTrigger { set; get; } = false;
 
+    public TutorialTargeting_boolParam targetCollideObj;
+
+    public bool isDynamicTag_Picking = false;
+    public string MatchingTagTargetString;
     public override void Enter()
     {
         gameObject.SetActive(true);
 
-        Debug.Log("TutorialTrigger Enter>>");
-        // Trigger 오브젝트 활성화
-        triggerObject.gameObject.SetActive(true);
-    }
+        Debug.Log("TutorialTrigger Enter>>"+ MatchingTagTargetString);
 
+        if (isDynamicTag_Picking)
+        {
+            var gameObjs= GameObject.FindGameObjectsWithTag(MatchingTagTargetString);
+            for(int g=0; g<gameObjs.Length; g++)
+            {
+                Debug.Log("TutorialTrigger "+g + "|" + MatchingTagTargetString);
+                var item = gameObjs[g].GetComponent<TutorialTargeting_boolParam>();
+                item.SetTargetTut(this);//그들중 임의의 하나와 캐릭터가 부딪혔을때 관련 다음 튜토리얼 실행>>
+            }
+        }
+        else
+        {
+            targetCollideObj.SetTargetTut(this);
+        }   
+    }
+    void Update()
+    {
+        if (isDynamicTag_Picking)
+        {
+            var gameObjs = GameObject.FindGameObjectsWithTag(MatchingTagTargetString);
+            for (int g = 0; g < gameObjs.Length; g++)
+            {
+                Debug.Log("TutorialTrigger " + g + "|" + MatchingTagTargetString);
+                var item = gameObjs[g].GetComponent<TutorialTargeting_boolParam>();
+                item.SetTargetTut(this);//그들중 임의의 하나와 캐릭터가 부딪혔을때 관련 다음 튜토리얼 실행>>
+            }
+        }
+        else
+        {
+            targetCollideObj.SetTargetTut(this);
+        }
+    }
     public override void Execute(TutorialController controller)
     {
         /*
@@ -25,7 +56,7 @@ public class TutorialTrigger : TutorialBase
 			controller.SetNextTutorial();
 		}*/
 
-        if (isTrigger == true)
+        if (IsEnd == true)
         {
             controller.SetNextTutorial();
         }
@@ -34,20 +65,6 @@ public class TutorialTrigger : TutorialBase
     public override void Exit()
     {
         Debug.Log("TutorialTrigger Exit>>");
-
-        // Trigger 오브젝트 비활성화
-        triggerObject.gameObject.SetActive(false);
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.transform.CompareTag("Player"))
-        {
-            isTrigger = true;
-
-            Debug.Log(triggerObject.name + "오브젝트 CollidersEnter 반응 다음 튜토리얼");
-            //collision.gameObject.SetActive(false);
-        }
     }
 }
 

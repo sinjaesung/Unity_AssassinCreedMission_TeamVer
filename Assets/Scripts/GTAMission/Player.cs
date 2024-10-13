@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     public Missions missions;
 
     public PickupItem[] pickupItems;
-    public SaveGlow saveglow;//¹Ì¼Ç1
 
     MiniMapScript minimap;
     private void Awake()

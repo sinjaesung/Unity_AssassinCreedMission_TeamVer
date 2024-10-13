@@ -2,13 +2,18 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
-public enum Speaker {  Rico = 0, DoctorKO}
+public enum Speaker {  Player = 0, Npc}
 
 public class DialogSystem : MonoBehaviour
 {
     [SerializeField]
     private Dialog[] dialogs; //현재 분기의 대사 목록
+    [SerializeField]
+    private Image[] SpeakerImages;//대화창 캐릭터 이미지
+    [SerializeField]
+    private Sprite[] SpeakerSprites;
     [SerializeField]
     private Image[] imageDialogs; //대화창 Image UI
     [SerializeField]
@@ -24,7 +29,7 @@ public class DialogSystem : MonoBehaviour
 
     private int currentIndex = -1;
     private bool isTypingEffect = false; // 텍스트 타이핑 효과를 재생중인지
-    private Speaker currentSpeaker = Speaker.Rico;
+    private Speaker currentSpeaker = Speaker.Player;
 
     [SerializeField]
     public int SpearkCnt = 2;
@@ -97,6 +102,13 @@ public class DialogSystem : MonoBehaviour
 
         //화자의 대사 텍스트 활성화 및 설정 (Typing Effect)
         textDialogues[(int)currentSpeaker].gameObject.SetActive(true);
+
+        if (SpeakerImages[(int)currentSpeaker] != null)
+        {
+            SpeakerImages[(int)currentSpeaker].gameObject.SetActive(true);
+            SpeakerImages[(int)currentSpeaker].sprite = SpeakerSprites[(int)currentSpeaker];
+        }
+
         StartCoroutine(nameof(TypingText));
     }
 
@@ -106,6 +118,10 @@ public class DialogSystem : MonoBehaviour
         textNames[index].gameObject.SetActive(false);
         textDialogues[index].gameObject.SetActive(false);
         objectArrows[index].SetActive(false);
+        if (SpeakerImages[index] != null)
+        {
+            SpeakerImages[index].gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator TypingText()

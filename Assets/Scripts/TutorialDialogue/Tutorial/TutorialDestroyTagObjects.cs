@@ -4,6 +4,7 @@ public class TutorialDestroyTagObjects : TutorialBase
 {
     /*[SerializeField]
     private GameObject[] objectList;*/
+    [SerializeField] public MissionQuest targetMissionQuest;
     [SerializeField]
     private string tagName;
 
@@ -12,12 +13,11 @@ public class TutorialDestroyTagObjects : TutorialBase
         gameObject.SetActive(true);
 
         Debug.Log("TutorialDestroyTagObjects Enter>>");
-      
-        //제거해야할 오브젝트들을 활성화
-       /* for(int i=0; i<objectList.Length; ++i)
+
+        if (targetMissionQuest != null)
         {
-            objectList[i].SetActive(true);
-        }*/
+            targetMissionQuest.gameObject.SetActive(true);
+        }
     }
 
     
@@ -27,6 +27,10 @@ public class TutorialDestroyTagObjects : TutorialBase
         
         if (objects.Length == 0)
         {
+            if (targetMissionQuest != null)
+            {
+                targetMissionQuest.MissionPassing();//미션1,2,3 등 통과
+            }
             controller.SetNextTutorial();
         }
     }

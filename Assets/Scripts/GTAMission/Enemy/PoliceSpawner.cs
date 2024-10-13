@@ -10,7 +10,7 @@ public class PoliceSpawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Spawn());
+        //StartCoroutine(Spawn());
     }
     
     public void SpawnEnemies(int spawnCnt)
@@ -30,7 +30,6 @@ public class PoliceSpawner : MonoBehaviour
             Transform child = transform.GetChild(Random.Range(0, transform.childCount - 1));
             obj.GetComponent<PoliceWaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
 
-            //obj.transform.position = child.position + new Vector3(0, 6f, 0);
             obj.GetComponent<NavMeshAgent>().Warp(child.position);
 
             yield return null;
@@ -50,7 +49,6 @@ public class PoliceSpawner : MonoBehaviour
             Transform child = transform.GetChild(Random.Range(0, transform.childCount - 1));
             obj.GetComponent<PoliceWaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
 
-            //obj.transform.position = child.position + new Vector3(0, 6f, 0);
             obj.GetComponent<NavMeshAgent>().Warp(child.position + new Vector3(0, 6f, 0));
 
             yield return null;

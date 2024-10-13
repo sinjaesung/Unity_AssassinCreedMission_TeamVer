@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class Mission3 : MonoBehaviour
+public class Mission3 : MissionQuest
 {
-    public Missions missions;
-
-    public string MatchTagString = "TARGET_C";
-    public int MatchTagObjCnt = 0;
 
     private void Update()
     {
@@ -16,35 +12,16 @@ public class Mission3 : MonoBehaviour
         MatchTagObjCnt = targetTagObjects.Length;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void MissionPassing()
     {
-        if (other.CompareTag("Player"))
+        //미션2(B타깃들을 없애라)
+        if (missions.Mission1 == true && missions.Mission2 == true && missions.Mission3 == false && missions.Mission4 == false)
         {
-            //미션3
-            if (missions.Mission1 == true && missions.Mission2 == true && missions.Mission3 == false && missions.Mission4 == false)
+            if (IsValidPass())
             {
-                if (IsValidPass())
-                {
-                    Debug.Log(MatchTagString + ">해당 타입의 오브젝트 모두 제거시에만 미션 통과");
-                    missions.Mission3 = true;
-
-                   // Destroy(gameObject, 3f);
-                }
+                Debug.Log(MatchTagString + ">해당 타입의 오브젝트 모두 제거시에만 미션 통과");
+                missions.Mission3 = true;
             }
-        }
-    }
-    private bool IsValidPass()
-    {
-        var targetTagObjects = GameObject.FindGameObjectsWithTag(MatchTagString);
-        MatchTagObjCnt = targetTagObjects.Length;
-
-        if (MatchTagObjCnt <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 }

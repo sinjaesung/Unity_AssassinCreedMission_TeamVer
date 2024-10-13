@@ -52,9 +52,16 @@ public class PlayerScript : MonoBehaviour
 
     public int JumpUpAnimExeCnt = 0;
 
+    public TutorialMovement[] tutorialmovement;
     private void Awake()
     {
         parkouractionUi = FindObjectOfType<ParkourActionUI>();
+        tutorialmovement = FindObjectsOfType<TutorialMovement>();
+       /* for (int e = 0; e < tutorialmovement.Length; e++)
+        {
+            var item = tutorialmovement[e];
+            item.SetData(transform);
+        }*/
 
         Debug.Log("프리팹 캐릭터 스폰"+transform.name);
         healthbar = FindObjectOfType<HealthBar>();
