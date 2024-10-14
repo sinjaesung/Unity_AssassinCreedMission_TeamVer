@@ -8,6 +8,9 @@ public class TutorialTargeting_boolParam : MonoBehaviour
     [SerializeField] private bool isCompletedDelete = false;
 
     [SerializeField] public GameObject SpriteRenderConversation;
+
+    public bool IsChildAnimActives = false;
+    public string BoolParameterNames;
     private void Awake()
     {
 
@@ -20,6 +23,24 @@ public class TutorialTargeting_boolParam : MonoBehaviour
     {
         Debug.Log("TutorialTargeting_boolParam" + target.transform.name);
         targetTutorial = target;
+
+        if (IsChildAnimActives)
+        {
+            var anim = GetComponentInChildren<Animator>();
+            anim.SetBool(BoolParameterNames, true);
+        }
+    }
+    public void ActiveEffectClear()
+    {
+        if (IsChildAnimActives)
+        {
+            var anim = GetComponentInChildren<Animator>();
+            anim.SetBool(BoolParameterNames, false);
+        }
+        if (SpriteRenderConversation != null)
+        {
+            SpriteRenderConversation.SetActive(false);
+        }
     }
     
    public void OnClicked()

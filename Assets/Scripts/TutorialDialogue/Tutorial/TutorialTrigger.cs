@@ -35,22 +35,25 @@ public class TutorialTrigger : TutorialBase
     }
     void Update()
     {
-        if (isDynamicTag_Picking)
+        if (!IsEnd)
         {
-            var gameObjs = GameObject.FindGameObjectsWithTag(MatchingTagTargetString);
-            for (int g = 0; g < gameObjs.Length; g++)
+            if (isDynamicTag_Picking)
             {
-                Debug.Log("TutorialTrigger " + g + "|" + MatchingTagTargetString);
-                var item = gameObjs[g].GetComponent<TutorialTargeting_boolParam>();
-                item.SetTargetTut(this);//그들중 임의의 하나와 캐릭터가 부딪혔을때 관련 다음 튜토리얼 실행>>
-                
-                item.LinearActiveConversation();
+                var gameObjs = GameObject.FindGameObjectsWithTag(MatchingTagTargetString);
+                for (int g = 0; g < gameObjs.Length; g++)
+                {
+                    Debug.Log("TutorialTrigger " + g + "|" + MatchingTagTargetString);
+                    var item = gameObjs[g].GetComponent<TutorialTargeting_boolParam>();
+                    item.SetTargetTut(this);//그들중 임의의 하나와 캐릭터가 부딪혔을때 관련 다음 튜토리얼 실행>>
+
+                    item.LinearActiveConversation();
+                }
             }
-        }
-        else
-        {
-            targetCollideObj.SetTargetTut(this); 
-            targetCollideObj.LinearActiveConversation();
+            else
+            {
+                targetCollideObj.SetTargetTut(this);
+                targetCollideObj.LinearActiveConversation();
+            }
         }
     }
     public override void Execute(TutorialController controller)
@@ -70,7 +73,22 @@ public class TutorialTrigger : TutorialBase
 
     public override void Exit()
     {
-        Debug.Log("TutorialTrigger Exit>>");
+        Debug.Log("TutorialTrigger Exit 모든 이펙트 효과 초기화>>");
+
+        if (isDynamicTag_Picking)
+        {
+            var gameObjs = GameObject.FindGameObjectsWithTag(MatchingTagTargetString);
+            for (int g = 0; g < gameObjs.Length; g++)
+            {
+                Debug.Log("TutorialTrigger " + g + "|" + MatchingTagTargetString);
+                var item = gameObjs[g].GetComponent<TutorialTargeting_boolParam>();
+                item.ActiveEffectClear();
+            }
+        }
+        else
+        {
+            targetCollideObj.ActiveEffectClear();
+        }
     }
 }
 

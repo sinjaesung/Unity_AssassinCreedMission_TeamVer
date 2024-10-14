@@ -29,6 +29,9 @@ public class Missions : MonoBehaviour
     [TextArea]
     public string[] missionDetails;
 
+    [SerializeField]
+    public Animator[] MissionSpaceAnims;
+
     public bool IsOpen = false;
     
     public void GetMissionDetails()
@@ -54,6 +57,11 @@ public class Missions : MonoBehaviour
             //UI
             missionText.text = missionTitles[0];
             missionDetail.text = missionDetails[0];
+
+            MissionSpaceAnims[0].SetBool("Active", true);
+            MissionSpaceAnims[1].SetBool("Active", false);
+            MissionSpaceAnims[2].SetBool("Active", false);
+            MissionSpaceAnims[3].SetBool("Active", false);
         }
         if (Mission1 == true && Mission2 == false && Mission3 == false && Mission4 == false)
         {
@@ -62,6 +70,11 @@ public class Missions : MonoBehaviour
             missionDetail.text = missionDetails[1];
 
             MissionClearImages[0].SetActive(true);
+
+            MissionSpaceAnims[0].SetBool("Active", false);
+            MissionSpaceAnims[1].SetBool("Active", true);
+            MissionSpaceAnims[2].SetBool("Active", false);
+            MissionSpaceAnims[3].SetBool("Active", false);
         }
         if (Mission1 == true && Mission2 == true && Mission3 == false && Mission4 == false)
         {
@@ -70,6 +83,11 @@ public class Missions : MonoBehaviour
             missionDetail.text = missionDetails[2];
 
             MissionClearImages[1].SetActive(true);
+
+            MissionSpaceAnims[0].SetBool("Active", false);
+            MissionSpaceAnims[1].SetBool("Active", false);
+            MissionSpaceAnims[2].SetBool("Active", true);
+            MissionSpaceAnims[3].SetBool("Active", false);
         }
         if (Mission1 == true && Mission2 == true && Mission3 == true && Mission4 == false)
         {
@@ -78,6 +96,11 @@ public class Missions : MonoBehaviour
             missionDetail.text = missionDetails[3];
 
             MissionClearImages[2].SetActive(true);
+
+            MissionSpaceAnims[0].SetBool("Active", false);
+            MissionSpaceAnims[1].SetBool("Active", false);
+            MissionSpaceAnims[2].SetBool("Active", false);
+            MissionSpaceAnims[3].SetBool("Active", true);
         }
         if (Mission1 == true && Mission2 == true && Mission3 == true && Mission4 == true)
         {
@@ -86,6 +109,11 @@ public class Missions : MonoBehaviour
             missionDetail.text = missionDetails[4];
 
             MissionClearImages[3].SetActive(true);
+
+            MissionSpaceAnims[0].SetBool("Active", false);
+            MissionSpaceAnims[1].SetBool("Active", false);
+            MissionSpaceAnims[2].SetBool("Active", false);
+            MissionSpaceAnims[3].SetBool("Active", false);
         }
     }
 }
