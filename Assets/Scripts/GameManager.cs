@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,12 +20,17 @@ public class GameManager : MonoBehaviour
 
     [Header("HelpMenu")]
     public GameObject MenuCanvas;
-
+    [Header("MissionMenu")]
+    public Missions Missions;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             MenuCanvas.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Missions.GetMissionDetails();
         }
        /* if ((MainMenu.instance!=null && MainMenu.instance.startGame == true))
         {

@@ -743,8 +743,8 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 64
-  visionRadius: 20
-  shootingRadius: 8
+  visionRadius: 8
+  shootingRadius: 6
   playerInvisionRadius: 0
   playerInshootingRadius: 0
   giveDamageOf: 3

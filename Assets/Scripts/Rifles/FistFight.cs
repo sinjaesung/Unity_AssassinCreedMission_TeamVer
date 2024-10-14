@@ -144,7 +144,6 @@ public class FistFight : MonoBehaviour
             Debug.Log("FistFight [[MeleeHitinfo]]:" + knight.transform.name);
 
             KnightAI knightAI = knight.GetComponent<KnightAI>();
-            KnightAI2 knightAI2 = knight.GetComponent<KnightAI2>();
             PoliceMan policeman = knight.GetComponent<PoliceMan>();
             CharacterNavigatorScript character = knight.GetComponent<CharacterNavigatorScript>();
             Boss boss = knight.GetComponent<Boss>();

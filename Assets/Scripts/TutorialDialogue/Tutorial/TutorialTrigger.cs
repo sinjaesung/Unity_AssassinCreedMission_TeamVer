@@ -23,11 +23,14 @@ public class TutorialTrigger : TutorialBase
                 Debug.Log("TutorialTrigger "+g + "|" + MatchingTagTargetString);
                 var item = gameObjs[g].GetComponent<TutorialTargeting_boolParam>();
                 item.SetTargetTut(this);//그들중 임의의 하나와 캐릭터가 부딪혔을때 관련 다음 튜토리얼 실행>>
+
+                item.LinearActiveConversation();
             }
         }
         else
         {
             targetCollideObj.SetTargetTut(this);
+            targetCollideObj.LinearActiveConversation();
         }   
     }
     void Update()
@@ -40,11 +43,14 @@ public class TutorialTrigger : TutorialBase
                 Debug.Log("TutorialTrigger " + g + "|" + MatchingTagTargetString);
                 var item = gameObjs[g].GetComponent<TutorialTargeting_boolParam>();
                 item.SetTargetTut(this);//그들중 임의의 하나와 캐릭터가 부딪혔을때 관련 다음 튜토리얼 실행>>
+                
+                item.LinearActiveConversation();
             }
         }
         else
         {
-            targetCollideObj.SetTargetTut(this);
+            targetCollideObj.SetTargetTut(this); 
+            targetCollideObj.LinearActiveConversation();
         }
     }
     public override void Execute(TutorialController controller)

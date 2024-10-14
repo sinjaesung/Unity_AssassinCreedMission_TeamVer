@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(DialogSystem))]
@@ -16,6 +17,7 @@ public class TutorialDialog : TutorialBase
     public BossSpawner bossSpawner;
 
     public float delayTime;
+
     public override void Enter()
     {
         gameObject.SetActive(true);

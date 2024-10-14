@@ -49,7 +49,7 @@ public class PoliceSpawner : MonoBehaviour
             Transform child = transform.GetChild(Random.Range(0, transform.childCount - 1));
             obj.GetComponent<PoliceWaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
 
-            obj.GetComponent<NavMeshAgent>().Warp(child.position + new Vector3(0, 6f, 0));
+            obj.GetComponent<NavMeshAgent>().Warp(child.position);
 
             yield return null;
 

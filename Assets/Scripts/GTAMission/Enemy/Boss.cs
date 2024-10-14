@@ -32,6 +32,7 @@ public class Boss : MonoBehaviour
 
     private void Awake()
     {
+        missions = FindObjectOfType<Missions>();
         bossHealth = originHealth;
         healthbar.fillAmount = originHealth / bossHealth;
 

@@ -35,7 +35,7 @@ public class AISpawner : MonoBehaviour
             obj.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
 
             //obj.transform.position = SpawnPoint.position + new Vector3(0, 6f, 0);
-            obj.GetComponent<NavMeshAgent>().Warp(child.position + new Vector3(0, 6f, 0));
+            obj.GetComponent<NavMeshAgent>().Warp(child.position);
 
             yield return null;
 
@@ -55,7 +55,7 @@ public class AISpawner : MonoBehaviour
             obj.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
 
             //obj.transform.position = child.position + new Vector3(0, 6f, 0);
-            obj.GetComponent<NavMeshAgent>().Warp(child.position + new Vector3(0, 6f, 0));
+            obj.GetComponent<NavMeshAgent>().Warp(child.position);
 
             yield return null;
 
