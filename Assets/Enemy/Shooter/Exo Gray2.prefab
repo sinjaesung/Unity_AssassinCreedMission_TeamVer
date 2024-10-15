@@ -743,12 +743,12 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 64
-  visionRadius: 14
-  shootingRadius: 12
+  visionRadius: 9
+  shootingRadius: 8
   playerInvisionRadius: 0
   playerInshootingRadius: 0
-  giveDamageOf: 8
-  shootingRange: 24
+  giveDamageOf: 4
+  shootingRange: 20
   ShootingRaycastArea: {fileID: 1999468249307954838}
   timebtwShoot: 0.9
   wantedlevelScript: {fileID: 0}

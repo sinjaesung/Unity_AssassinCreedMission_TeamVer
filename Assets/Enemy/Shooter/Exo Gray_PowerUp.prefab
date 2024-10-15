@@ -771,14 +771,14 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 64
-  visionRadius: 16
-  shootingRadius: 18
+  visionRadius: 10
+  shootingRadius: 10
   playerInvisionRadius: 0
   playerInshootingRadius: 0
-  giveDamageOf: 14
-  shootingRange: 26
+  giveDamageOf: 6
+  shootingRange: 22
   ShootingRaycastArea: {fileID: 1999468249307954838}
-  timebtwShoot: 0.7
+  timebtwShoot: 0.8
   wantedlevelScript: {fileID: 0}
   player: {fileID: 0}
   bloodEffect: {fileID: 3509048749290912230, guid: 0366bcc307bba6a4f975ec625a54a735, type: 3}

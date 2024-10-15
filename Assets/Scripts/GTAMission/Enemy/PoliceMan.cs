@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.AI;
-//using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,16 +26,17 @@ public class PoliceMan : MonoBehaviour
     public GameObject playerBody;
     public LayerMask PlayerLayer;
     public float visionRadius;
-    public float shootingRadius;
     public bool playerInvisionRadius;
-    public bool playerInshootingRadius;
+    public bool playerInattackRadius;
 
-    [Header("Police Shooting Var")]
-    public float giveDamageOf = 3f;
-    public float shootingRange = 20f;
-    public GameObject ShootingRaycastArea;
-    public float timebtwShoot;
-    bool previouslyShoot;
+    [Header("Police Attack Var")]
+    public int SingleMeleeVal;
+    public Transform attackArea;
+    public float giveDamage;
+    public float attackingRadius;
+    public bool previouslyAttack;
+    public float timebtwAttack;
+
     public WantedLevel wantedlevelScript;
     public Player player;
     public GameObject bloodEffect;
@@ -63,7 +63,7 @@ public class PoliceMan : MonoBehaviour
     {
         Walk = 0,
         Chase,
-        Shoot
+        Attack
     }
     private void Start()
     {
@@ -134,11 +134,11 @@ public class PoliceMan : MonoBehaviour
         player = GameObject.FindObjectOfType<Player>();
 
         playerInvisionRadius = Physics.CheckSphere(transform.position, visionRadius, PlayerLayer);
-        playerInshootingRadius = Physics.CheckSphere(transform.position, shootingRadius, PlayerLayer);
+        playerInattackRadius = Physics.CheckSphere(transform.position, attackingRadius, PlayerLayer);
 
         if (IsPaused == false)
         {
-            if (playerInvisionRadius && !playerInshootingRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
+            if (playerInvisionRadius && !playerInattackRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
                        wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
             {
                 //수배가 내려지고 범위내에 있으면 추적
@@ -146,13 +146,14 @@ public class PoliceMan : MonoBehaviour
                 nowStatus = Status.Chase;
                 ChasePlayer();
             }
-            else if (playerInvisionRadius && playerInshootingRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
+            else if (playerInvisionRadius && playerInattackRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
                 wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
             {
                 //수배가 내려지고 범위내에,공격범위까지 있으면 공격
                 //  Debug.Log("PoliceOFficer ShootPlayer조건 충족:");
-                nowStatus = Status.Shoot;
-                ShootPlayer();
+                nowStatus = Status.Attack;
+                //ShootPlayer();
+                SingleMeleeModes();
             }
             else
             {
@@ -181,7 +182,7 @@ public class PoliceMan : MonoBehaviour
 
             if (destinationDistance >= stopSpeed)
             {
-                if (!playerInshootingRadius)
+                if (!playerInattackRadius)
                 {
                     //Turning
                     destinationReached = false;
@@ -194,7 +195,7 @@ public class PoliceMan : MonoBehaviour
                     navagent.SetDestination(destination);
 
                     animator.SetBool("Walk", true);
-                    animator.SetBool("Shoot", false);
+                    animator.SetBool("SingleHandAttackActive", false);
                     animator.SetBool("Run", false);
                 }
             }
@@ -216,10 +217,11 @@ public class PoliceMan : MonoBehaviour
         //Vector3 PlayerToDirection = playerBody.transform.position - transform.position;
         //PlayerToDirection.y = 0;
         playerBody = FindObjectOfType<PlayerScript>().gameObject;
+        transform.LookAt(playerBody.transform.position);
 
         navagent.speed = runningSpeed;
 
-        if (!playerInshootingRadius)
+        if (!playerInattackRadius)
         {
             //transform.position += transform.forward * CurrentmovingSpeed * Time.deltaTime;
             if (playerBody != null)
@@ -230,13 +232,13 @@ public class PoliceMan : MonoBehaviour
 
             animator.SetBool("Run", true);
             animator.SetBool("Walk", false);
-            animator.SetBool("Shoot", false);
+            animator.SetBool("SingleHandAttackActive", false);
 
             CurrentmovingSpeed = runningSpeed;
         }  
     }
 
-    public void ShootPlayer()
+   /* public void ShootPlayer()
     {
         CurrentmovingSpeed = 0f;
 
@@ -282,6 +284,110 @@ public class PoliceMan : MonoBehaviour
     private void ActiveShooting()
     {
         previouslyShoot = false;
+    }*/
+   void SingleMeleeModes()
+    {
+        playerBody = FindObjectOfType<PlayerScript>().gameObject;
+
+        transform.LookAt(playerBody.transform.position);
+
+        animator.SetBool("Walk", false);
+        animator.SetBool("SingleHandAttackActive", true);
+
+        if (!previouslyAttack)
+        {
+            Debug.Log("PoliceMan SingleMeleeModes는 근접형 공격인 경우에 처리된다 애니메이션1~5 랜덤진행");
+            SingleMeleeVal = Random.Range(1, 5);
+
+            if(SingleMeleeVal == 1)
+            {
+                Attack();
+                //Animation
+                StartCoroutine(Attack1());
+            }
+
+            if (SingleMeleeVal == 2)
+            {
+                Attack();
+                //Animation
+                StartCoroutine(Attack2());
+            }
+
+            if (SingleMeleeVal == 3)
+            {
+                Attack();
+                //Animation
+                StartCoroutine(Attack3());
+            }
+
+            if (SingleMeleeVal == 4)
+            {
+                Attack();
+                //Animation
+                StartCoroutine(Attack4());
+            }
+        }
+    }
+    void Attack()
+    {
+        Collider[] hitPlayer = Physics.OverlapSphere(attackArea.position, attackingRadius, PlayerLayer);
+
+        foreach(Collider player in hitPlayer)
+        {
+            PlayerScript playerScript = player.GetComponent<PlayerScript>();
+
+            if(playerScript != null)
+            {
+                Debug.Log("Hitting.Player");
+                playerScript.playerHitDamage(giveDamage);
+            }
+        }
+
+        previouslyAttack = true;
+        Invoke(nameof(ActiveAttack), timebtwAttack);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        if (attackArea == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackArea.position, attackingRadius);
+    }
+    private void ActiveAttack()
+    {
+        previouslyAttack = false;
+    }
+    IEnumerator Attack1()
+    {
+        Debug.Log("Policeman Attack1");
+
+        animator.SetBool("Attack1", true);
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool("Attack1", false);
+    }
+    IEnumerator Attack2()
+    {
+        Debug.Log("Policeman Attack2");
+
+        animator.SetBool("Attack2", true);
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool("Attack2", false);
+    }
+    IEnumerator Attack3()
+    {
+        Debug.Log("Policeman Attack3");
+
+        animator.SetBool("Attack3", true);
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool("Attack3", false);
+    }
+    IEnumerator Attack4()
+    {
+        Debug.Log("Policeman Attack4");
+
+        animator.SetBool("Attack4", true);
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool("Attack4", false);
     }
     public void characterHitDamage(float takeDamage)
     {
@@ -328,9 +434,8 @@ public class PoliceMan : MonoBehaviour
         isDied = true;
        // audiosource.Play();
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
-        animator.SetBool("Die", true);
+        animator.SetBool("isDead", true);
         CurrentmovingSpeed = 0f;
-        shootingRange = 0f;
 
         //AI 추격 중지
         navagent.isStopped = true;
@@ -342,6 +447,5 @@ public class PoliceMan : MonoBehaviour
         Object.Destroy(gameObject, 6.0f);
         player.currentkills += 1;
         player.playerMoney += 10;
-
     }
 }

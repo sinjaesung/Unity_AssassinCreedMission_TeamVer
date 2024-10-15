@@ -2429,6 +2429,7 @@ MonoBehaviour:
   parkouractionUi: {fileID: 0}
   MoveArrowAnim: {fileID: 3750854712925373515}
   JumpUpAnimExeCnt: 0
+  tutorialmovement: []
 --- !u!114 &2152151353452754969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2686,7 +2687,6 @@ MonoBehaviour:
   inventory: {fileID: 5415757230560499045}
   missions: {fileID: 0}
   pickupItems: []
-  saveglow: {fileID: 0}
 --- !u!136 &2367688473664890077
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3994,7 +3994,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5808655948607100072, guid: 3e8e276ffe0e40d4686bff108ab01b8d, type: 3}
+  - {fileID: 2100000, guid: cca65276f447c444e9d69a6393a6c421, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
