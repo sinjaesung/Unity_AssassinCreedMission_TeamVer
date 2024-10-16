@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class SingleMeleeAttack : MonoBehaviour
 
     public Transform attackArea;
     public float giveDamage = 10f;
+    public float origingiveDamage = 10f;
     public float attackRadius;
     public LayerMask knightLayer;
 
@@ -32,6 +34,40 @@ public class SingleMeleeAttack : MonoBehaviour
     public float ThrustSlash_DamageMultipier=1f;
     public float timeBetSkill = 6f;//스킬 발동 간격(var)
     public float lastSkillTime; //마지막으로 스킬을 발동한 시점
+
+    public Renderer[] skinrenderer;
+    public GameObject swordobj;
+    public GameObject SkillTrailRenderer;
+    public GameObject NormalTrailRenderer;
+    public float PowerTime;
+    private void Awake()
+    {
+        SkillTrailRenderer.SetActive(false);
+        skinrenderer = swordobj.GetComponentsInChildren<Renderer>();
+    }
+    private IEnumerator ThrustSkill_Effect()
+    {
+        giveDamage = giveDamage * ThrustSlash_DamageMultipier;
+        SkillTrailRenderer.SetActive(true);
+        NormalTrailRenderer.SetActive(false);
+        for (int e = 0; e < skinrenderer.Length; e++)
+        {
+            var item = skinrenderer[e];
+            item.material.EnableKeyword("_EMISSION");
+        }
+
+        yield return new WaitForSeconds(PowerTime);
+
+        for (int e = 0; e < skinrenderer.Length; e++)
+        {
+            var item = skinrenderer[e];
+            item.material.DisableKeyword("_EMISSION");
+        }
+        SkillTrailRenderer.SetActive(false);
+        NormalTrailRenderer.SetActive(true);
+        giveDamage = origingiveDamage;
+    }
+
     private void Update()
     {
         enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
@@ -41,17 +77,20 @@ public class SingleMeleeAttack : MonoBehaviour
             combatactionui.AllCombatClear();
             combatactionui.SwordAttackAction.SetActive(true);
 
-            //쿨타임 체크용
-            if (Time.time >= lastSkillTime + timeBetSkill)
+            if (anim.GetBool("SingleHandAttackActive") == true)
             {
-                Debug.Log("암살 스킬 쓰기 가능>>");
-                combatactionui.SwordAttackAction2.SetActive(true);
-            }
-            else
-            {
-                Debug.Log("암살 스킬 쿨타임");
-                combatactionui.SwordAttackAction2.SetActive(false);
-            }
+                //쿨타임 체크용
+                if (Time.time >= lastSkillTime + timeBetSkill)
+                {
+                    Debug.Log("암살 스킬 쓰기 가능>>");
+                    combatactionui.SwordAttackAction2.SetActive(true);
+                }
+                else
+                {
+                    Debug.Log("암살 스킬 쿨타임");
+                    combatactionui.SwordAttackAction2.SetActive(false);
+                }
+            }     
         }
         else
         {
@@ -123,19 +162,30 @@ public class SingleMeleeAttack : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            if(Time.time >= lastSkillTime + timeBetSkill)
+            if (anim.GetBool("SingleHandAttackActive") == true)
             {
-                Debug.Log("암살 스킬 쓰기 가능>>");
-                //스킬을 사용했으니 마지막 스킬 쓴 시간을 현재로 갱신한다.
-                lastSkillTime = Time.time;
+                Debug.Log("암살 스킬&애니메이션의 경우 왼쪽마우스클릭이후 " +
+                    "SingleHandAttackActive 모드 인 경우에만 실행가능>>");
 
-                Speical_Attack();
-                //Animation
-                StartCoroutine(ThrustSlashAttack());
+                if (Time.time >= lastSkillTime + timeBetSkill)
+                {
+                    Debug.Log("암살 스킬 쓰기 가능>>");
+                    //스킬을 사용했으니 마지막 스킬 쓴 시간을 현재로 갱신한다.
+                    lastSkillTime = Time.time;
+
+                    StartCoroutine(ThrustSkill_Effect());
+                    Speical_Attack();
+                    //Animation
+                    StartCoroutine(ThrustSlashAttack());
+                }
+                else
+                {
+                    Debug.Log("암살 스킬 쿨타임");
+                }
             }
             else
             {
-                Debug.Log("암살 스킬 쿨타임");
+                Debug.Log("SingleHandAttackActive모드가 아닌 경우엔 암살스킬 실행하지 않음");
             }
         }
     }
@@ -191,7 +241,7 @@ public class SingleMeleeAttack : MonoBehaviour
 
             if (knightAI != null)
             {
-                knightAI.TakeDamage(giveDamage * ThrustSlash_DamageMultipier, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+                knightAI.TakeDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
             }
             /* if (knightAI2 != null)
              {
@@ -199,15 +249,15 @@ public class SingleMeleeAttack : MonoBehaviour
              }*/
             if (character != null)
             {
-                character.characterHitDamage(giveDamage * ThrustSlash_DamageMultipier, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+                character.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
             }
             if (policeman != null)
             {
-                policeman.characterHitDamage(giveDamage * ThrustSlash_DamageMultipier, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+                policeman.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
             }
             if (boss != null)
             {
-                boss.characterHitDamage(giveDamage * ThrustSlash_DamageMultipier, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+                boss.characterHitDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
             }
             SwordAudioPlayer.PlayOneShot(ThurstSwordClip2);
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class Player : MonoBehaviour
 {
@@ -16,8 +17,13 @@ public class Player : MonoBehaviour
     public PickupItem[] pickupItems;
 
     MiniMapScript minimap;
+
+    public Light[] lightObjs;
+    public GameManager gameManager;
     private void Awake()
     {
+        gameManager = FindObjectOfType<GameManager>();
+
         missions = FindObjectOfType<Missions>();
         FindObjectOfType<WantedLevel>().SetData(this);
         FindObjectOfType<MoneyUI>().SetData(this);
@@ -38,6 +44,23 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown("p"))
         {
             Cursor.lockState = CursorLockMode.None;
+        }
+
+        if (gameManager.isNight)
+        {
+            for(int l=0; l<lightObjs.Length; l++)
+            {
+                var item = lightObjs[l];
+                item.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            for (int l = 0; l < lightObjs.Length; l++)
+            {
+                var item = lightObjs[l];
+                item.gameObject.SetActive(false);
+            }
         }
     }
     public void SavePlayer()

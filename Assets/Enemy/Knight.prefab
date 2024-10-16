@@ -1734,6 +1734,8 @@ MonoBehaviour:
   visionRadius: 8
   playerInvisionRadius: 0
   playerInattackRadius: 0
+  NightVisionReduce: 5
+  originVisionRadius: 8
   SingleMeleeVal: 0
   attackArea: {fileID: 8338175616853981174}
   giveDamage: 2
@@ -1754,6 +1756,7 @@ MonoBehaviour:
   IsPaused: 0
   StateList: []
   healthbar: {fileID: 2121508592047789841}
+  gameManager: {fileID: 0}
 --- !u!136 &2888015475693203008
 CapsuleCollider:
   m_ObjectHideFlags: 0

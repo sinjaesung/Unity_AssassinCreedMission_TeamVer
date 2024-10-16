@@ -1634,10 +1634,13 @@ MonoBehaviour:
   visionRadius: 6
   IsAttacked: 0
   playerInvisionRadius: 0
+  NightVisionReduce: 4
+  originVisionRadius: 6
   navagent: {fileID: 0}
   isDied: 0
   runDistance: 15
   healthbar: {fileID: 3690890078795891608}
+  gameManager: {fileID: 0}
   nowStatus: 0
   hitEffect: {fileID: 5621628608784596876}
   deathSound: {fileID: 8300000, guid: 464bafb3a0985444d97d32e1a55b6c5c, type: 3}
@@ -1864,6 +1867,8 @@ MonoBehaviour:
   targetTutorial: {fileID: 0}
   isCompletedDelete: 0
   SpriteRenderConversation: {fileID: 4528612021017029409}
+  IsChildAnimActives: 0
+  BoolParameterNames: 
 --- !u!1 &6195435487250465736
 GameObject:
   m_ObjectHideFlags: 0
