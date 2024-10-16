@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public GameObject MenuCanvas;
     [Header("MissionMenu")]
     public Missions Missions;
+
+    public bool isNight = false;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

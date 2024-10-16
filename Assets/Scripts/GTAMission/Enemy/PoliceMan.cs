@@ -28,6 +28,8 @@ public class PoliceMan : MonoBehaviour
     public float visionRadius;
     public bool playerInvisionRadius;
     public bool playerInattackRadius;
+    public float NightVisionReduce;
+    public float originVisionRadius;
 
     [Header("Police Attack Var")]
     public int SingleMeleeVal;
@@ -59,6 +61,9 @@ public class PoliceMan : MonoBehaviour
     public List<string> StateList = new List<string>();
 
     public Image healthbar;
+
+    public GameManager gameManager;
+
     public enum Status
     {
         Walk = 0,
@@ -67,6 +72,8 @@ public class PoliceMan : MonoBehaviour
     }
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+
         OriginalColor = Color.white;
         audiosource = GetComponent<AudioSource>();
 
@@ -130,6 +137,16 @@ public class PoliceMan : MonoBehaviour
     }
     private void Update()
     {
+        if (gameManager.isNight)
+        {
+            visionRadius = originVisionRadius - NightVisionReduce;
+            visionRadius = Mathf.Max(0, visionRadius);
+        }
+        else
+        {
+            visionRadius = originVisionRadius;
+        }
+
         playerBody = FindObjectOfType<PlayerScript>().gameObject;
         player = GameObject.FindObjectOfType<Player>();
 

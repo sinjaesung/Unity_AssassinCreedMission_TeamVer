@@ -19,12 +19,19 @@ public class SingleMeleeAttack2 : MonoBehaviour
     [SerializeField] public AudioClip SwordClip; // 소리(var)
     [SerializeField] public AudioClip SwordClip2; // 소리(var)
 
+    [SerializeField] public AudioClip ThurstSwordClip1; // 소리(var)
+    [SerializeField] public AudioClip ThurstSwordClip2; // 소리(var)
+
     public CombatActionUI combatactionui;
 
     public LayerMask enemyLayer;
     public float attackRange;
     public bool enemyInvisionRadius;
 
+    [Header("ThurstSlash")]
+    public float ThrustSlash_DamageMultipier = 1f;
+    public float timeBetSkill = 6f;//스킬 발동 간격(var)
+    public float lastSkillTime; //마지막으로 스킬을 발동한 시점
     private void Update()
     {
         enemyInvisionRadius = Physics.CheckSphere(transform.position, attackRange, enemyLayer);
@@ -33,6 +40,18 @@ public class SingleMeleeAttack2 : MonoBehaviour
         {
             combatactionui.AllCombatClear();
             combatactionui.SwordAttackAction.SetActive(true);
+
+            //쿨타임 체크용
+            if (Time.time >= lastSkillTime + timeBetSkill)
+            {
+                Debug.Log("암살 스킬 쓰기 가능>>");
+                combatactionui.SwordAttackAction2.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("암살 스킬 쿨타임");
+                combatactionui.SwordAttackAction2.SetActive(false);
+            }
         }
         else
         {
@@ -101,6 +120,24 @@ public class SingleMeleeAttack2 : MonoBehaviour
                 StartCoroutine(SingleAttack5());
             }
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Time.time >= lastSkillTime + timeBetSkill)
+            {
+                Debug.Log("암살 스킬 쓰기 가능>>");
+                //스킬을 사용했으니 마지막 스킬 쓴 시간을 현재로 갱신한다.
+                lastSkillTime = Time.time;
+
+                Speical_Attack();
+                //Animation
+                StartCoroutine(ThrustSlashAttack());
+            }
+            else
+            {
+                Debug.Log("암살 스킬 쿨타임");
+            }
+        }
     }
 
     void Attack()
@@ -138,6 +175,54 @@ public class SingleMeleeAttack2 : MonoBehaviour
             }
             SwordAudioPlayer.PlayOneShot(SwordClip);
         }
+    }
+    void Speical_Attack()
+    {
+        Collider[] hitKnight = Physics.OverlapSphere(attackArea.position, attackRadius, knightLayer);
+
+        foreach (Collider knight in hitKnight)
+        {
+            Debug.Log("SingleMeleeAttack Speical_Attack [[MeleeHitinfo]]:" + knight.transform.name);
+
+            KnightAI knightAI = knight.GetComponent<KnightAI>();
+            PoliceMan policeman = knight.GetComponent<PoliceMan>();
+            CharacterNavigatorScript character = knight.GetComponent<CharacterNavigatorScript>();
+            Boss boss = knight.GetComponent<Boss>();
+
+            if (knightAI != null)
+            {
+                knightAI.TakeDamage(giveDamage * ThrustSlash_DamageMultipier, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+            }
+            /* if (knightAI2 != null)
+             {
+                 knightAI2.TakeDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+             }*/
+            if (character != null)
+            {
+                character.characterHitDamage(giveDamage * ThrustSlash_DamageMultipier, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+            }
+            if (policeman != null)
+            {
+                policeman.characterHitDamage(giveDamage * ThrustSlash_DamageMultipier, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+            }
+            if (boss != null)
+            {
+                boss.characterHitDamage(giveDamage * ThrustSlash_DamageMultipier, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
+            }
+            SwordAudioPlayer.PlayOneShot(ThurstSwordClip2);
+        }
+    }
+    IEnumerator ThrustSlashAttack()
+    {
+        anim.SetBool("ThrustSlash", true);
+        SwordAudioPlayer.PlayOneShot(ThurstSwordClip1);
+        playerScript.movementSpeed = 0f;
+        anim.SetFloat("movementValue", 0f);
+        yield return new WaitForSeconds(0.2f);
+        anim.SetBool("ThrustSlash", false);
+        playerScript.movementSpeed = 5f;
+        anim.SetFloat("movementValue", 0f);
+        SwordAudioPlayer.PlayOneShot(ThurstSwordClip1);
     }
 
     private void OnDrawGizmosSelected()

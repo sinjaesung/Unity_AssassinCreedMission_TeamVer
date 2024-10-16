@@ -6,6 +6,7 @@ public class CombatActionUI : MonoBehaviour
 {
     public GameObject FistAttackAction;
     public GameObject SwordAttackAction;
+    public GameObject SwordAttackAction2;
    /* public GameObject RifleAttackAction;
     public GameObject BazookaAttackAction;
     public GameObject IceStrikeAttackAction;

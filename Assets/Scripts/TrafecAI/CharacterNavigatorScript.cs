@@ -26,12 +26,17 @@ public class CharacterNavigatorScript : MonoBehaviour
     public float visionRadius;
     public bool IsAttacked = false;
     public bool playerInvisionRadius;
+    public float NightVisionReduce;
+    public float originVisionRadius;
 
     public NavMeshAgent navagent;
     public bool isDied = false;
     public float runDistance = 15f;//How far the enemy runs away from the player
 
     public Image healthbar;
+
+    public GameManager gameManager;
+
     public enum Status
     {
         Walk = 0,
@@ -53,6 +58,8 @@ public class CharacterNavigatorScript : MonoBehaviour
 
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+
         OriginalColor = Color.white;
 
         presentHealth = characterHealth;
@@ -106,6 +113,16 @@ public class CharacterNavigatorScript : MonoBehaviour
     }
     private void Update()
     {
+        if (gameManager.isNight)
+        {
+            visionRadius = originVisionRadius - NightVisionReduce;
+            visionRadius = Mathf.Max(0, visionRadius);
+        }
+        else
+        {
+            visionRadius = originVisionRadius;
+        }
+
         if (FindObjectOfType<PlayerScript>() != null)
         {
             playerBody = FindObjectOfType<PlayerScript>().gameObject;
