@@ -10,10 +10,10 @@ public class DialogSystem : MonoBehaviour
 {
     [SerializeField]
     private Dialog[] dialogs; //현재 분기의 대사 목록
-    [SerializeField]
+   /* [SerializeField]
     private Image[] SpeakerImages;//대화창 캐릭터 이미지
     [SerializeField]
-    private Sprite[] SpeakerSprites;
+    private Sprite[] SpeakerSprites;*/
     [SerializeField]
     private Image[] imageDialogs; //대화창 Image UI
     [SerializeField]
@@ -103,11 +103,11 @@ public class DialogSystem : MonoBehaviour
         //화자의 대사 텍스트 활성화 및 설정 (Typing Effect)
         textDialogues[(int)currentSpeaker].gameObject.SetActive(true);
 
-        if (SpeakerImages[(int)currentSpeaker] != null)
+      /*  if (SpeakerImages[(int)currentSpeaker] != null)
         {
             SpeakerImages[(int)currentSpeaker].gameObject.SetActive(true);
             SpeakerImages[(int)currentSpeaker].sprite = SpeakerSprites[(int)currentSpeaker];
-        }
+        }*/
 
         StartCoroutine(nameof(TypingText));
     }
@@ -118,10 +118,10 @@ public class DialogSystem : MonoBehaviour
         textNames[index].gameObject.SetActive(false);
         textDialogues[index].gameObject.SetActive(false);
         objectArrows[index].SetActive(false);
-        if (SpeakerImages[index] != null)
+      /*  if (SpeakerImages[index] != null)
         {
             SpeakerImages[index].gameObject.SetActive(false);
-        }
+        }*/
     }
 
     private IEnumerator TypingText()

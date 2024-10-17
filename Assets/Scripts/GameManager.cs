@@ -35,6 +35,15 @@ public class GameManager : MonoBehaviour
         {
             Missions.GetMissionDetails();
         }
+       /* if (Input.GetKey(KeyCode.LeftAlt)){
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else if (!Input.GetKey(KeyCode.LeftAlt))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }*/
        /* if ((MainMenu.instance!=null && MainMenu.instance.startGame == true))
         {
            // Debug.Log("MainMenu.instance.startGame>>" + MainMenu.instance.startGame);

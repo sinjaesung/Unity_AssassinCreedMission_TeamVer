@@ -11,9 +11,21 @@ public class TutorialTargeting_boolParam : MonoBehaviour
 
     public bool IsChildAnimActives = false;
     public string BoolParameterNames;
+    public Animator childAnim;
     private void Awake()
     {
-
+        if (IsChildAnimActives)
+        {
+            for (int e = 0; e< GetComponentsInChildren<Animator>().Length; e++)
+            {
+                var item = GetComponentsInChildren<Animator>()[e];
+                if(item != this)
+                {
+                    //자기자신인것이 아닌.
+                    childAnim = item;
+                }
+            }
+        }
     }
     public void LinearActiveConversation()
     {
@@ -26,16 +38,15 @@ public class TutorialTargeting_boolParam : MonoBehaviour
 
         if (IsChildAnimActives)
         {
-            var anim = GetComponentInChildren<Animator>();
-            anim.SetBool(BoolParameterNames, true);
+            childAnim.SetBool(BoolParameterNames, true);
         }
     }
     public void ActiveEffectClear()
     {
         if (IsChildAnimActives)
         {
-            var anim = GetComponentInChildren<Animator>();
-            anim.SetBool(BoolParameterNames, false);
+            //var anim = GetComponentInChildren<Animator>();
+            childAnim.SetBool(BoolParameterNames, false);
         }
         if (SpriteRenderConversation != null)
         {
