@@ -8,11 +8,8 @@ public class AISpawner : MonoBehaviour
     public GameObject[] AiPrefab;
     public int AiToSpawn;
 
-    public Transform SpawnPoint;
-
     private void Awake()
     {
-        SpawnPoint = FindObjectOfType<AISpawnPoint>().transform;
     }
     private void Start()
     {
