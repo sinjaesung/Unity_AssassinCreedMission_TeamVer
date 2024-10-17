@@ -3901,7 +3901,7 @@ MonoBehaviour:
   rotSpeed: 450
   MCC: {fileID: 0}
   environmentChecker: {fileID: 4772352173289507441}
-  JumpPower: 2
+  JumpPower: 3
   animator: {fileID: 8518919461340124515}
   Cc: {fileID: 1228009027442949822}
   surfaceCheckRadius: 0.3

@@ -24,6 +24,7 @@ public class DayAndNight : MonoBehaviour
     private void Start()
     {
         dayFogDensity = RenderSettings.fogDensity;
+        currentFogDensity = dayFogDensity;
     }
 
     private void Update()
