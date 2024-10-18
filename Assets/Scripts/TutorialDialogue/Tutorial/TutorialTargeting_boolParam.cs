@@ -9,9 +9,12 @@ public class TutorialTargeting_boolParam : MonoBehaviour
 
     [SerializeField] public GameObject SpriteRenderConversation;
 
+    public LayerMask playerLayer;
     public bool IsChildAnimActives = false;
     public string BoolParameterNames;
     public Animator childAnim;
+    public bool IsCheck_;
+
     private void Awake()
     {
         if (IsChildAnimActives)
@@ -26,6 +29,33 @@ public class TutorialTargeting_boolParam : MonoBehaviour
                 }
             }
         }
+        //StartCoroutine(ColliderChecker());
+    }
+    void Update()
+    {
+        var IsCheck = false;
+        
+        Collider[] hitElement = Physics.OverlapSphere(transform.position, 6, playerLayer);
+
+        foreach (Collider Item in hitElement)
+        {
+            Debug.Log("NpcCharacter OverlapSphere CHECK [[MeleeHitinfo]]:" + Item.transform.name);
+
+            if (Item.CompareTag("Player"))
+            {
+                IsCheck = true;
+                IsCheck_ = IsCheck;
+
+                if (targetTutorial != null)
+                {
+                    if (!targetTutorial.IsEnd)
+                    {
+                        targetTutorial.IsEnd = true;
+                    }
+                }
+                break;
+            }
+        }        
     }
     public void LinearActiveConversation()
     {
@@ -65,7 +95,7 @@ public class TutorialTargeting_boolParam : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider other)
+   /* private void OnTriggerEnter(Collider other)
     {
         if (targetTutorial != null)
         {
@@ -77,7 +107,7 @@ public class TutorialTargeting_boolParam : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
     public void Hide()
     {
         gameObject.SetActive(false);

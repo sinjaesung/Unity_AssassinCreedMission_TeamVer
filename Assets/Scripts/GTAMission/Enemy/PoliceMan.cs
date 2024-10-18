@@ -155,15 +155,22 @@ public class PoliceMan : MonoBehaviour
 
         if (IsPaused == false)
         {
-            if (playerInvisionRadius && !playerInattackRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
+            if (playerInvisionRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
                        wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
             {
                 //수배가 내려지고 범위내에 있으면 추적
                 //Debug.Log("PoliceOFficer ChasePlayer조건 충족:");
                 nowStatus = Status.Chase;
                 ChasePlayer();
+
+                if (playerInattackRadius)
+                {
+                    nowStatus = Status.Attack;
+                    //ShootPlayer();
+                    SingleMeleeModes();
+                }
             }
-            else if (playerInvisionRadius && playerInattackRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
+           /* else if (playerInvisionRadius && playerInattackRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
                 wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
             {
                 //수배가 내려지고 범위내에,공격범위까지 있으면 공격
@@ -171,7 +178,7 @@ public class PoliceMan : MonoBehaviour
                 nowStatus = Status.Attack;
                 //ShootPlayer();
                 SingleMeleeModes();
-            }
+            }*/
             else
             {
                 //수배가 내려졌으나 공격,인식 범위에 없거나,공격범위에 있는데 수배가 안내려졌으면 걷는다.
@@ -199,8 +206,8 @@ public class PoliceMan : MonoBehaviour
 
             if (destinationDistance >= stopSpeed)
             {
-                if (!playerInattackRadius)
-                {
+                //if (!playerInattackRadius)
+                //{
                     //Turning
                     destinationReached = false;
                     //Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
@@ -214,7 +221,7 @@ public class PoliceMan : MonoBehaviour
                     animator.SetBool("Walk", true);
                     animator.SetBool("SingleHandAttackActive", false);
                     animator.SetBool("Run", false);
-                }
+                //}
             }
             else
             {
@@ -234,12 +241,16 @@ public class PoliceMan : MonoBehaviour
         //Vector3 PlayerToDirection = playerBody.transform.position - transform.position;
         //PlayerToDirection.y = 0;
         playerBody = FindObjectOfType<PlayerScript>().gameObject;
-        transform.LookAt(playerBody.transform.position);
+        //transform.LookAt(playerBody.transform.position);
+        /*Vector3 viewDirection = playerBody.transform.position - transform.position;
+        viewDirection.y = 0;
+
+        transform.LookAt(viewDirection);*/
 
         navagent.speed = runningSpeed;
 
-        if (!playerInattackRadius)
-        {
+        //if (!playerInattackRadius)
+        //{
             //transform.position += transform.forward * CurrentmovingSpeed * Time.deltaTime;
             if (playerBody != null)
             {
@@ -252,7 +263,7 @@ public class PoliceMan : MonoBehaviour
             animator.SetBool("SingleHandAttackActive", false);
 
             CurrentmovingSpeed = runningSpeed;
-        }  
+        //}  
     }
 
    /* public void ShootPlayer()
@@ -306,7 +317,17 @@ public class PoliceMan : MonoBehaviour
     {
         playerBody = FindObjectOfType<PlayerScript>().gameObject;
 
-        transform.LookAt(playerBody.transform.position);
+        /* Vector3 viewDirection = playerBody.transform.position - transform.position;
+         viewDirection.y = 0;
+
+         transform.LookAt(viewDirection);*/
+        navagent.speed = runningSpeed;
+
+        if (playerBody != null)
+        {
+            //transform.LookAt(playerBody.transform);
+            navagent.SetDestination(playerBody.transform.position);
+        }
 
         animator.SetBool("Walk", false);
         animator.SetBool("SingleHandAttackActive", true);

@@ -8,12 +8,17 @@ public class AISpawner : MonoBehaviour
     public GameObject[] AiPrefab;
     public int AiToSpawn;
 
+    public bool IsAutoStart = false;
+
     private void Awake()
     {
     }
     private void Start()
     {
-        //StartCoroutine(Spawn());
+        if (IsAutoStart)
+        {
+            StartCoroutine(Spawn());
+        }
     }
     public void SpawnEnemies(int spawnCnt)
     {

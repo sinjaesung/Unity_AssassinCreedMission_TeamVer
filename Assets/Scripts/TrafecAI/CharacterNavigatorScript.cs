@@ -63,7 +63,8 @@ public class CharacterNavigatorScript : MonoBehaviour
         OriginalColor = Color.white;
 
         presentHealth = characterHealth;
-        healthbar.fillAmount = presentHealth / characterHealth;
+        if(healthbar!=null)
+             healthbar.fillAmount = presentHealth / characterHealth;
 
         //playerBody = FindObjectOfType<PlayerScript>().gameObject;
         player = GameObject.FindObjectOfType<Player>();
