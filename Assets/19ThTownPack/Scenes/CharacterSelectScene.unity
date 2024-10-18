@@ -171,7 +171,7 @@ MonoBehaviour:
   characters:
   - {fileID: 535390629872257635}
   selectedCharacter: 0
-  loadSceneName: Episode1
+  loadSceneName: Episode1-1
   startGame: 0
 --- !u!1 &261416605
 GameObject:
