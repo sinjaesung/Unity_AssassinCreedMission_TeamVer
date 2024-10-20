@@ -25,6 +25,8 @@ public class MainCameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked; 
         Cursor.visible = false;
+
+        Time.timeScale = 1f;
     }
     public void SetCharacterTarget(Transform target_)
     {

@@ -222,15 +222,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 185990e51e35afd429890a2190b9c54d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.04566
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 185990e51e35afd429890a2190b9c54d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.122694254
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 185990e51e35afd429890a2190b9c54d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 248.3504
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 185990e51e35afd429890a2190b9c54d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -603,8 +603,8 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   nowStatus: 0
   hitEffect: {fileID: 1582100333620726258}
-  deathSound: {fileID: 8300000, guid: 464bafb3a0985444d97d32e1a55b6c5c, type: 3}
-  hitSound: {fileID: 8300000, guid: 325eb92ceb14b114fb764740482eb521, type: 3}
+  deathSound: {fileID: 8300000, guid: 88b3e6643870d9647bcbec30b59cbe72, type: 3}
+  hitSound: {fileID: 8300000, guid: 888c464376ca2bb4fa9f72d95695381c, type: 3}
   audiosource: {fileID: 2906470885254312439}
   OriginalColor: {r: 0, g: 0, b: 0, a: 0}
   IsPaused: 0

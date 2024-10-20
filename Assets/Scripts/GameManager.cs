@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject cutScene1;
 
     [Header("HelpMenu")]
-    public GameObject MenuCanvas;
+    public MainMenu MenuCanvas;
     [Header("MissionMenu")]
     public Missions Missions;
 
@@ -29,11 +29,14 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            MenuCanvas.SetActive(true);
+            MenuCanvas.GetOpen();
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            Missions.GetMissionDetails();
+            if (Missions != null)
+            {
+                Missions.GetMissionDetails();
+            }
         }
        /* if (Input.GetKey(KeyCode.LeftAlt)){
             Cursor.lockState = CursorLockMode.None;
@@ -43,7 +46,7 @@ public class GameManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-        }*/
+        }*
        /* if ((MainMenu.instance!=null && MainMenu.instance.startGame == true))
         {
            // Debug.Log("MainMenu.instance.startGame>>" + MainMenu.instance.startGame);

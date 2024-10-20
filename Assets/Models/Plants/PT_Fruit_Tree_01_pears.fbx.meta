@@ -3,7 +3,17 @@ guid: ac45709429791d9438881e8983bad60e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PT_Fruit_Tree_Foliage_Mat
+    second: {fileID: 2100000, guid: 0277dd27da4e22340a89d0df844852ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PT_Fruit_Tree_Opaque_mat
+    second: {fileID: 2100000, guid: 9b6e3e388dcb2cf4c98b9ff61bafecf8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

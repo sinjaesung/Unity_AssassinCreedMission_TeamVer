@@ -37,7 +37,8 @@ public class SingleMeleeAttack2 : MonoBehaviour
     public Renderer[] skinrenderer;
     public GameObject swordobj;
     public GameObject SkillTrailRenderer;
-    public GameObject NormalTrailRenderer;
+    public GameObject NormalSlashVfx;
+    public GameObject SkillSlashVfx;
 
     public float PowerTime;
     private void Awake()
@@ -49,7 +50,6 @@ public class SingleMeleeAttack2 : MonoBehaviour
     {
         giveDamage = giveDamage * ThrustSlash_DamageMultipier;
         SkillTrailRenderer.SetActive(true);
-        NormalTrailRenderer.SetActive(false);
         for (int e = 0; e < skinrenderer.Length; e++)
         {
             var item = skinrenderer[e];
@@ -64,7 +64,6 @@ public class SingleMeleeAttack2 : MonoBehaviour
             item.material.DisableKeyword("_EMISSION");
         }
         SkillTrailRenderer.SetActive(false);
-        NormalTrailRenderer.SetActive(true);
         giveDamage = origingiveDamage;
     }
 
@@ -203,6 +202,9 @@ public class SingleMeleeAttack2 : MonoBehaviour
             CharacterNavigatorScript character = knight.GetComponent<CharacterNavigatorScript>();
             Boss boss = knight.GetComponent<Boss>();
 
+            var HitImpact = Instantiate(NormalSlashVfx, knight.ClosestPoint(attackArea.position), Quaternion.LookRotation(knight.transform.position - attackArea.position));
+            Destroy(HitImpact, 1.6f);
+
             if (knightAI != null)
             {
                 knightAI.TakeDamage(giveDamage, knight.ClosestPoint(attackArea.position), (knight.transform.position - attackArea.position));
@@ -238,6 +240,9 @@ public class SingleMeleeAttack2 : MonoBehaviour
             PoliceMan policeman = knight.GetComponent<PoliceMan>();
             CharacterNavigatorScript character = knight.GetComponent<CharacterNavigatorScript>();
             Boss boss = knight.GetComponent<Boss>();
+
+            var HitImpact = Instantiate(SkillSlashVfx, knight.ClosestPoint(attackArea.position), Quaternion.LookRotation(knight.transform.position - attackArea.position));
+            Destroy(HitImpact, 1.6f);
 
             if (knightAI != null)
             {

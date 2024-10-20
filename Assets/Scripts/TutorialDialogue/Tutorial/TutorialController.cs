@@ -12,6 +12,9 @@ public class TutorialController : MonoBehaviour
     public TutorialBase currentTutorial = null;
     private int currentIndex = -1;
 
+    public bool SelectedSceneMove = false;
+    public string[] SelectedScenes;
+    public int SelectedSceneIndex;
     private void Start()
     {
         SetNextTutorial();
@@ -58,9 +61,16 @@ public class TutorialController : MonoBehaviour
 
         Debug.Log("Complete All >> Ending¾À ÀÌµ¿>>>");
 
-        if (!nextSceneName.Equals(""))
+        if (SelectedSceneMove == false)
         {
-            SceneManager.LoadScene(nextSceneName);
+            if (!nextSceneName.Equals(""))
+            {
+                SceneManager.LoadScene(nextSceneName);
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene(SelectedScenes[SelectedSceneIndex]);
         }
     }
 }

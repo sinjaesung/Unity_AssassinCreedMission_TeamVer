@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class PoliceMan : MonoBehaviour
 {
@@ -28,8 +29,7 @@ public class PoliceMan : MonoBehaviour
     public float visionRadius;
     public bool playerInvisionRadius;
     public bool playerInattackRadius;
-    public float NightVisionReduce;
-    public float originVisionRadius;
+   // public float NightVisionReduce;
 
     [Header("Police Attack Var")]
     public int SingleMeleeVal;
@@ -63,6 +63,9 @@ public class PoliceMan : MonoBehaviour
     public Image healthbar;
 
     public GameManager gameManager;
+
+    public AudioSource SwordAudioPlayer; //  소리 재생기
+    [SerializeField] public AudioClip SwordClip; // 소리(var)
 
     public enum Status
     {
@@ -137,7 +140,7 @@ public class PoliceMan : MonoBehaviour
     }
     private void Update()
     {
-        if (gameManager.isNight)
+       /* if (gameManager.isNight)
         {
             visionRadius = originVisionRadius - NightVisionReduce;
             visionRadius = Mathf.Max(0, visionRadius);
@@ -145,7 +148,7 @@ public class PoliceMan : MonoBehaviour
         else
         {
             visionRadius = originVisionRadius;
-        }
+        }*/
 
         playerBody = FindObjectOfType<PlayerScript>().gameObject;
         player = GameObject.FindObjectOfType<Player>();
@@ -155,30 +158,30 @@ public class PoliceMan : MonoBehaviour
 
         if (IsPaused == false)
         {
-            if (playerInvisionRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
-                       wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
+            if (playerInvisionRadius && !playerInattackRadius /*&& (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
+                       wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true)*/)
             {
-                //수배가 내려지고 범위내에 있으면 추적
+                //비전범위에만 있는경우
                 //Debug.Log("PoliceOFficer ChasePlayer조건 충족:");
                 nowStatus = Status.Chase;
                 ChasePlayer();
 
-                if (playerInattackRadius)
+               /* if (playerInattackRadius)
                 {
                     nowStatus = Status.Attack;
                     //ShootPlayer();
                     SingleMeleeModes();
-                }
+                }*/
             }
-           /* else if (playerInvisionRadius && playerInattackRadius && (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
-                wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true))
+           else if (playerInvisionRadius && playerInattackRadius /*&& (wantedlevelScript.level1 == true || wantedlevelScript.level2 == true ||
+                wantedlevelScript.level3 == true || wantedlevelScript.level4 == true || wantedlevelScript.level5 == true)*/)
             {
-                //수배가 내려지고 범위내에,공격범위까지 있으면 공격
+                //공격범위에 까지 있는경우
                 //  Debug.Log("PoliceOFficer ShootPlayer조건 충족:");
                 nowStatus = Status.Attack;
                 //ShootPlayer();
                 SingleMeleeModes();
-            }*/
+            }
             else
             {
                 //수배가 내려졌으나 공격,인식 범위에 없거나,공격범위에 있는데 수배가 안내려졌으면 걷는다.
@@ -242,10 +245,10 @@ public class PoliceMan : MonoBehaviour
         //PlayerToDirection.y = 0;
         playerBody = FindObjectOfType<PlayerScript>().gameObject;
         //transform.LookAt(playerBody.transform.position);
-        /*Vector3 viewDirection = playerBody.transform.position - transform.position;
-        viewDirection.y = 0;
+        //Vector3 viewDirection = playerBody.transform.position - transform.position;
+        //viewDirection.y = 0;
 
-        transform.LookAt(viewDirection);*/
+        transform.LookAt(playerBody.transform.position);
 
         navagent.speed = runningSpeed;
 
@@ -321,6 +324,7 @@ public class PoliceMan : MonoBehaviour
          viewDirection.y = 0;
 
          transform.LookAt(viewDirection);*/
+        transform.LookAt(playerBody.transform.position);
         navagent.speed = runningSpeed;
 
         if (playerBody != null)
@@ -383,6 +387,8 @@ public class PoliceMan : MonoBehaviour
 
         previouslyAttack = true;
         Invoke(nameof(ActiveAttack), timebtwAttack);
+
+        SwordAudioPlayer.PlayOneShot(SwordClip);
     }
     private void OnDrawGizmosSelected()
     {
