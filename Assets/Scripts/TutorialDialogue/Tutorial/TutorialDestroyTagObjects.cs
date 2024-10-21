@@ -8,6 +8,7 @@ public class TutorialDestroyTagObjects : TutorialBase
     [SerializeField]
     private string tagName;
 
+    public AudioSource TargetBgmAudioSource;
     public override void Enter()
     {
         gameObject.SetActive(true);
@@ -38,5 +39,10 @@ public class TutorialDestroyTagObjects : TutorialBase
     public override void Exit()
     {
         Debug.Log("TutorialDestroyTagObjects Exit>>");
+
+        if (TargetBgmAudioSource != null)
+        {
+            TargetBgmAudioSource.Stop();
+        }
     }
 }

@@ -18,6 +18,10 @@ public class TutorialDialog : TutorialBase
 
     public float delayTime;
 
+    public bool IsBgm = false;
+    public AudioSource BgmAudioPlayer; //  재생기
+    [SerializeField] public AudioClip BgmClip; // 소리
+
     public override void Enter()
     {
         gameObject.SetActive(true);
@@ -45,6 +49,14 @@ public class TutorialDialog : TutorialBase
         {
             StartCoroutine(SpawnBoss());
         }
+
+        if (IsBgm)
+        {
+            if (BgmAudioPlayer != null)
+            {
+                BgmAudioPlayer.PlayOneShot(BgmClip);
+            }
+        }   
     }
     private IEnumerator SpawnCharacter()
     {
