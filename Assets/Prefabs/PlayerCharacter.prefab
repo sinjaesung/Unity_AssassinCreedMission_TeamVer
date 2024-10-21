@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1706459140185543734}
   - component: {fileID: 2946064390740824381}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -919,7 +919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4115133716919787688}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -957,7 +957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4013202744692968129
 Transform:
   m_ObjectHideFlags: 0
@@ -967,7 +967,7 @@ Transform:
   m_GameObject: {fileID: 1234257064933844999}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.647, y: 0, z: 1.892}
+  m_LocalPosition: {x: 0.09, y: 0, z: 1.892}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1362,7 +1362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8464509594883828965}
   - component: {fileID: 2201897618857573736}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1445,7 +1445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2322463833394458766}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1477,7 +1477,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3609259571115005265}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: W
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1892,7 +1892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3343970740123296938}
   - component: {fileID: 1884178731765474702}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1976,7 +1976,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8648227335826525247}
   - component: {fileID: 4529201547902291967}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2066,7 +2066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9201187340946951847
 Transform:
   m_ObjectHideFlags: 0
@@ -3038,7 +3038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2080165964069137919}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
